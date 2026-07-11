@@ -20,10 +20,10 @@ namespace Clinic.Application.DTOs.AppointmentDTOs
         [Required(ErrorMessage = "Select Time")]
         public Guid DoctorScheduleId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "please appointment type")]
         public Guid AppointmentTypeId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "please enter date")]
         public DateOnly AppointmentDate { get; set; }
 
         [Required]
