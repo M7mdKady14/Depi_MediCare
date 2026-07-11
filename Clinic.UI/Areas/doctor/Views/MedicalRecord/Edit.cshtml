@@ -1,0 +1,83 @@
+﻿@model MedicalRecordDTO
+
+@{
+    ViewData["PageTitle"] = "Medical Record Management";
+    ViewData["PageSubtitle"] = "Update Patient Medical Record";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/doctor/css/patient/edit.css" />
+}
+
+<div class="container-fluid">
+    <div class="admin-card">
+        <div class="card-header-custom">
+            <h3><i class="fa-solid fa-notes-medical me-2"></i> Update Medical Record</h3>
+        </div>
+        <div class="card-body-custom">
+            <form method="post" asp-action="Save">
+                <div class="row">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PatientId" />
+                    <input type="hidden" asp-for="DoctorId" />
+                    <div class="col-md-12">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Diagnosis</label>
+                            <textarea asp-for="Diagnosis" class="form-control-custom" placeholder="Enter Medical Diagnosis">
+                            </textarea>
+                            <span asp-validation-for="Diagnosis" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Allergy</label>
+                            <textarea asp-for="Allergy" class="form-control-custom" placeholder="Enter Patient Allergy">
+                            </textarea>
+                            <span asp-validation-for="Allergy" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Chronic Disease</label>
+                            <textarea asp-for="ChronicDisease" class="form-control-custom" placeholder="Enter Patient Chronic Disease">
+                            </textarea>
+                            <span asp-validation-for="ChronicDisease" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Current Medications</label>
+                            <textarea asp-for="CurrentMedications" class="form-control-custom" placeholder="Enter Current Medications">
+                            </textarea>
+                            <span asp-validation-for="CurrentMedications" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Notes</label>
+                            <textarea asp-for="Notes" class="form-control-custom" placeholder="Enter Medical Record Notes">
+                            </textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <a asp-action="Details" asp-route-patientId="@Model.PatientId" class="btn btn-back-list me-4">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back To Medical Record
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Update Medical Record
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

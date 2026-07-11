@@ -1,0 +1,180 @@
+﻿@model PatientInfoDTO
+@{
+    ViewData["Title"] = "Patient Details";
+
+    string genderIcon = Model.Gender.ToString() == "Male" ? "fa-mars" : "fa-venus";
+    string fullName = $"{Model.FirstName} {Model.MiddleName} {Model.LastName}".Replace("  ", " ").Trim();
+    string initials = (Model.FirstName?.Length > 0 ? Model.FirstName[0].ToString() : "")
+                       + (Model.LastName?.Length > 0 ? Model.LastName[0].ToString() : "");
+    int age = DateTime.Now.Year - Model.BirthDate.Year
+              - (DateTime.Now.DayOfYear < Model.BirthDate.DayOfYear ? 1 : 0);
+
+    var patientAppointments = ViewBag.lstAppointments as PageResult<AppointmentInfoDTO>;
+
+    var upComing = patientAppointments.Items.Where(a => a.AppointmentStatus == AppointmentStatus.Waiting || a.AppointmentStatus == AppointmentStatus.Created).Count();
+    var visited = patientAppointments.Items.Where(a => a.AppointmentStatus == AppointmentStatus.InProgress || a.AppointmentStatus == AppointmentStatus.Completed).Count();
+}
+
+@section Styles
+{
+    <link href="~/css/patient/details.css" rel="stylesheet" />
+}
+
+<div class="dmc-page-grid" style="grid-template-columns: 360px 1fr;">
+
+    <div class="dmc-panel">
+        <div class="dmc-panel-header">
+            <div class="dmc-panel-title">Patient Summary</div>
+        </div>
+
+        <div class="dmc-panel-body" style="padding: 1.5rem 1.25rem;">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:1.5rem;">
+                <div class="dmc-avatar" style="width:72px; height:72px; font-size:1.6rem; margin-bottom:0.75rem;">
+                    @initials.ToUpper()
+                </div>
+                <div style="font-size:1.05rem; font-weight:600; color:#1a2e28;">@fullName</div>
+                <div style="font-size:0.78rem; color:#6b8c85; margin-top:2px;">
+                    <i class="fa-solid @genderIcon"></i> @Model.Gender &nbsp;•&nbsp; @age yrs
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--dmc-border); padding-top: 1rem;">
+                <div class="dmc-detail-row">
+                    <i class="fa-solid fa-id-badge dmc-detail-icon"></i>
+                    <div>
+                        <div class="dmc-detail-label">National Number</div>
+                        <div class="dmc-detail-value">@Model.NationalNumber</div>
+                    </div>
+                </div>
+
+                <div class="dmc-detail-row">
+                    <i class="fa-solid fa-phone dmc-detail-icon"></i>
+                    <div>
+                        <div class="dmc-detail-label">Phone Number</div>
+                        <div class="dmc-detail-value">@Model.PhoneNumber</div>
+                    </div>
+                </div>
+
+                <div class="dmc-detail-row">
+                    <i class="fa-solid fa-envelope dmc-detail-icon"></i>
+                    <div>
+                        <div class="dmc-detail-label">Email</div>
+                        <div class="dmc-detail-value">@(string.IsNullOrWhiteSpace(Model.Email) ? "—" : Model.Email)</div>
+                    </div>
+                </div>
+
+                <div class="dmc-detail-row">
+                    <i class="fa-solid fa-cake-candles dmc-detail-icon"></i>
+                    <div>
+                        <div class="dmc-detail-label">Birth Date</div>
+                        <div class="dmc-detail-value">@Model.BirthDate.ToString("dd MMM yyyy")</div>
+                    </div>
+                </div>
+
+                <div class="dmc-detail-row" style="border-bottom:none;">
+                    <i class="fa-solid fa-droplet dmc-detail-icon"></i>
+                    <div>
+                        <div class="dmc-detail-label">Blood Type</div>
+                        <div class="dmc-detail-value">
+                            <span class="dmc-badge dmc-badge-new">@Model.BloodType</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ RIGHT: Quick stats + actions ════════════ -->
+    <div style="display:flex; flex-direction:column; gap:1.25rem;">
+
+        <div class="dmc-stats" style="grid-template-columns: repeat(3, 1fr); margin-bottom:0;">
+            <div class="dmc-stat-card">
+                <div class="dmc-stat-icon teal"><i class="fa-solid fa-calendar-check"></i></div>
+                <div>
+                    <div class="dmc-stat-value">@patientAppointments.TotalCount</div>
+                    <div class="dmc-stat-label">Total Appointments</div>
+                </div>
+            </div>
+            <div class="dmc-stat-card">
+                <div class="dmc-stat-icon blue"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                    <div class="dmc-stat-value">@upComing</div> 
+                    <div class="dmc-stat-label">Upcoming</div>
+                </div>
+            </div>
+            <div class="dmc-stat-card">
+                <div class="dmc-stat-icon green"><i class="fa-solid fa-file-medical"></i></div>
+                <div>
+                    <div class="dmc-stat-value">@visited</div>
+                    <div class="dmc-stat-label">Visits Recorded</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dmc-panel">
+            <div class="dmc-panel-header">
+                <div class="dmc-panel-title">Appointments History</div>
+                <div class="dmc-panel-actions">
+                    <a class="dmc-btn-primary" asp-controller="Appointment" asp-action="Edit" asp-route-patientId="@Model.Id">
+                        <i class="fa-solid fa-plus"></i> Book Appointment
+                    </a>
+                </div>
+            </div>
+            <div class="dmc-panel-body">
+                <table class="dmc-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                            <th>Prescription</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.lstAppointments != null)
+                        {
+                            @foreach (var appt in patientAppointments.Items)
+                            {
+                                <tr>
+                                    <td>@appt.AppointmentDate.ToString("dd MMM yyyy")</td>
+                                    <td>@appt.DoctorName</td>
+                                    <td>
+                                        <span class="dmc-badge dmc-badge-">@appt.AppointmentStatus</span>
+                                    </td>
+                                    <td>
+                                        <a class="dmc-action-link" asp-controller="Appointment" asp-action="Details" asp-route-Id="@appt.Id">
+                                            View
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if (appt.AppointmentStatus == AppointmentStatus.InProgress || appt.AppointmentStatus == AppointmentStatus.Completed)
+                                        {
+                                            <a class="dmc-action-link" asp-controller="Prescription" asp-action="Details" asp-route-appointmentId="@appt.Id">
+                                                <i class="info-item"></i> Prescription
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <p>No Prescription Yet</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" style="text-align:center; color:#6b8c85; padding: 2rem 0;">
+                                    No appointments recorded yet.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+

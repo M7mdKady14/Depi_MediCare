@@ -1,0 +1,200 @@
+﻿@model PageResult<DocMedicalRecord>
+
+@section Styles 
+{
+    <link href="~/doctor/css/patient/index.css" rel="stylesheet" />
+}
+
+<div class="page-wrapper">
+
+    <!-- SEARCH BOX -->
+    <div class="card search-card">
+        <form method="get"
+              asp-controller="Patient"
+              asp-action="Index"
+              class="search-form">
+
+            <input type="text"
+                   name="Name"
+                   value="@Context.Request.Query["Name"]"
+                   placeholder="Patient name"
+                   class="form-control" />
+
+            <input type="text"
+                   name="PhoneNumber"
+                   value="@Context.Request.Query["PhoneNumber"]"
+                   placeholder="Phone"
+                   class="form-control" />
+
+            <input type="text"
+                   name="NationalNumber"
+                   value="@Context.Request.Query["NationalNumber"]"
+                   placeholder="National Number"
+                   class="form-control" />
+
+            <div class="search-actions">
+                <button type="submit" class="btn btn-search">Search</button>
+
+                <a asp-controller="Patient"
+                   asp-action="Index"
+                   class="btn btn-reset">
+                    Reset
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="card table-card">
+
+        <div class="card-header">
+            <span>Patients</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="text-align:center">Name</th>
+                        <th style="text-align:center">PhoneNumber</th>
+                        <th style="text-align:center">National Number</th>
+                        <th style="text-align:center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var record in Model.Items)
+                    {
+                        <tr>
+                            <td class="name" style="text-align:center">@record.PatientName</td>
+                            <td style="text-align:center">@record.PhoneNumber</td>
+                            <td style="text-align:center">@record.NationalNumber</td>
+                            <td>
+                                <div class="actions">
+                                    <a class="btn btn-primary"
+                                        asp-area="doctor"
+                                        asp-controller="Patient"
+                                        asp-action="Edit"
+                                        asp-route-patientId="@record.PatientId">
+                                        <i class="fa-solid fa-pen-to-square me-2"></i> 
+                                        Edit
+                                    </a>
+
+                                    <a class="btn btn-dark"
+                                        asp-area="doctor"
+                                        asp-controller="Patient"
+                                        asp-action="Details"
+                                        asp-route-Id="@record.PatientId">
+                                        <i class="fas fa-eye"></i>
+                                        Details
+                                    </a>
+
+                                    <a class="btn btn-success"
+                                       asp-area="doctor"
+                                       asp-controller="MedicalRecord"
+                                       asp-action="Details"
+                                       asp-route-patientId="@record.PatientId">
+                                        <i class="fas fa-notes-medical"></i>
+                                         Medical Record
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PAGINATION -->
+        @{
+            var search = Context.Request.Query;
+
+            int windowSize = 2;
+            int current = Model.PageNumber;
+            int total = Model.TotalPages;
+        }
+
+        <div class="pg-row">
+            <span class="pg-info">
+                Page @current of @total — @Model.TotalCount patients
+            </span>
+
+            <div class="pg-btns">
+
+                <!-- Prev -->
+                <a asp-action="Index"
+                   asp-route-pageNumber="@(current - 1)"
+                   asp-route-Name="@search["Name"]"
+                   asp-route-PhoneNumber="@search["PhoneNumber"]"
+                   asp-route-NationalNumber="@search["NationalNumber"]"
+                   class="pg-btn @(!Model.HasPrev ? "disabled" : "")">
+                    Prev
+                </a>
+
+                @{
+                    int rangeStart = Math.Max(2, current - windowSize);
+                    int rangeEnd = Math.Min(total - 1, current + windowSize);
+                }
+
+                <!-- First -->
+                <a asp-action="Index"
+                   asp-route-pageNumber="1"
+                   asp-route-Name="@search["Name"]"
+                   asp-route-PhoneNumber="@search["PhoneNumber"]"
+                   asp-route-NationalNumber="@search["NationalNumber"]"
+                   class="pg-btn @(current == 1 ? "active" : "")">
+                    1
+                </a>
+
+                @if (rangeStart > 2)
+                {
+                    <span class="pg-ellipsis">…</span>
+                }
+
+                <!-- Middle -->
+                @for (int i = rangeStart; i <= rangeEnd; i++)
+                {
+                    <a asp-action="Index"
+                       asp-route-pageNumber="@i"
+                       asp-route-Name="@search["Name"]"
+                       asp-route-PhoneNumber="@search["PhoneNumber"]"
+                       asp-route-NationalNumber="@search["NationalNumber"]"
+                       class="pg-btn @(i == current ? "active" : "")">
+                        @i
+                    </a>
+                }
+
+                @if (rangeEnd < total - 1)
+                {
+                    <span class="pg-ellipsis">…</span>
+                }
+
+                <!-- Last -->
+                @if (total > 1)
+                {
+                    <a asp-action="Index"
+                       asp-route-pageNumber="@total"
+                       asp-route-Name="@search["Name"]"
+                       asp-route-PhoneNumber="@search["PhoneNumber"]"
+                       asp-route-NationalNumber="@search["NationalNumber"]"
+                       class="pg-btn @(current == total ? "active" : "")">
+                        @total
+                    </a>
+                }
+
+                <!-- Next -->
+                <a asp-action="Index"
+                   asp-route-pageNumber="@(current + 1)"
+                   asp-route-Name="@search["Name"]"
+                   asp-route-PhoneNumber="@search["PhoneNumber"]"
+                   asp-route-NationalNumber="@search["NationalNumber"]"
+                   class="pg-btn @(!Model.HasNext ? "disabled" : "")">
+                    Next
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿.prescription-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.prescription-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.section-title {
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+.prescription-table th,
+.prescription-table td {
+    vertical-align: middle;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}

@@ -1,0 +1,260 @@
+﻿@model PageResult<AppointmentInfoDTO>
+
+@{
+    var search = ViewBag.SearchModel as ReceptionSearchAppointment ?? new ReceptionSearchAppointment();
+    var doctors = ViewBag.lstDoctors ?? new List<DoctorInfoDTO>();
+    var schedules = ViewBag.lstDoctorSchedules as List<AppointmentDocSchedule> ?? new List<AppointmentDocSchedule>();
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/appointments/index.css" />
+}
+
+<div class="container-fluid">
+    <div class="admin-card">
+        <div class="card-header-custom d-flex justify-content-between align-items-center">
+            <h3><i class="fas fa-calendar-check me-2"></i> Appointments</h3>
+        </div>
+
+        <form method="get" asp-action="Index" class="search-form row g-3 mb-4">
+
+            <div class="col-md-4">
+                <label>Appointment Type</label>
+                <select name="AppointmentTypeId" class="form-control-custom">
+                    <option value="">All</option>
+                    @foreach (var t in (IEnumerable<dynamic>)ViewBag.lstAppointmentTypes)
+                    {
+                        if (search.AppointmentTypeId == t.Id)
+                        {
+                            <option value="@t.Id" selected>@t.EName</option>
+                        }
+                        else
+                        {
+                            <option value="@t.Id">@t.EName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Status</label>
+                <select name="AppointmentStatus" class="form-control-custom">
+                    <option value="">All</option>
+                    @foreach (var status in Enum.GetValues(typeof(AppointmentStatus)))
+                    {
+                        if (search.AppointmentStatus?.ToString() == status.ToString())
+                        {
+                            <option value="@status" selected>@status</option>
+                        }
+                        else
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Doctors</label>
+                <select name="DoctorId" class="form-control-custom" id="DoctorId">
+                    <option value="">All</option>
+                    @foreach (var s in doctors)
+                    {
+                        if (search.DoctorId == s.Id)
+                        {
+                            <option value="@s.Id" selected>@s.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@s.Id">@s.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label>Date Start</label>
+                <input type="date"
+                       name="DateStart"
+                       value="@(search.DateStart?.ToString("yyyy-MM-dd"))"
+                       class="form-control-custom" />
+            </div>
+
+            <div class="col-md-6">
+                <label>Date End</label>
+                <input type="date"
+                       name="DateEnd"
+                       value="@(search.DateEnd?.ToString("yyyy-MM-dd"))"
+                       class="form-control-custom" />
+            </div>
+
+            <div class="col-md-4">
+                <label>Patient Name</label>
+                <input type="text" name="PatientName" value="@search.PatientName" placeholder="Patient Name" class="form-control-custom" />
+            </div>
+
+            <div class="col-md-4">
+                <label>Phone</label>
+                <input type="text" name="PatientPhoneNumber" value="@search.PatientPhoneNumber" placeholder="Phone" class="form-control-custom" />
+            </div>
+
+            <div class="col-md-4">
+                <label>National Number</label>
+                <input type="text" name="PatientNationalNumber" value="@search.PatientNationalNumber" placeholder="National Number" class="form-control-custom" />
+            </div>
+
+            <div class="col-12 text-end search-actions">
+                <a asp-action="Index" class="btn-search btn-search-reset">Reset</a>
+                <button class="btn-search btn-search-submit" type="submit">
+                    <i class="fas fa-search me-1"></i> Search
+                </button>
+            </div>
+        </form>
+
+        <div class="card-body-custom">
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Appointment Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Items != null && Model.Items.Any())
+                        {
+                            foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>@item.PatientName</td>
+                                    <td>@item.DoctorName</td>
+                                    <td>@item.AppointmentTypeName</td>
+                                    <td>@item.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        <span class="badge bg-secondary">@item.AppointmentStatus</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-controller="Appointment" asp-action="Details" asp-route-Id="@item.Id" class="btn btn-sm btn-info me-1" title="Details">
+                                            <i class="fas fa-eye"></i> Details
+                                        </a>
+                                        @if (item.AppointmentStatus == AppointmentStatus.InProgress || item.AppointmentStatus == AppointmentStatus.Completed)
+                                        {
+                                            <a class="btn btn-primary" asp-controller="Prescription" asp-action="Details" asp-route-appointmentId="@item.Id">
+                                                <i class="info-item"></i> Prescription
+                                            </a>
+                                        }
+                                        <button type="button" class="btn btn-sm btn-danger btn-delete"
+                                                data-id="@item.Id" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    No appointments found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION -->
+            @{
+                var search2 = Context.Request.Query;
+                int windowSize = 2;
+                int current = Model.PageNumber;
+                int total = Model.TotalPages;
+            }
+            <div class="pg-row">
+                <span class="pg-info">
+                    Page @current of @total — @Model.TotalCount appointments
+                </span>
+                <div class="pg-btns">
+                    <!-- Prev -->
+                    <a asp-action="Index"
+                       asp-route-pageNumber="@(current - 1)"
+                       class="pg-btn @(!Model.HasPrev ? "disabled" : "")">
+                        Prev
+                    </a>
+
+                    @{
+                        int rangeStart = Math.Max(2, current - windowSize);
+                        int rangeEnd = Math.Min(total - 1, current + windowSize);
+                    }
+
+                    <!-- First -->
+                    <a asp-action="Index"
+                       asp-route-pageNumber="1"
+                       class="pg-btn @(current == 1 ? "active" : "")">
+                        1
+                    </a>
+
+                    @if (rangeStart > 2)
+                    {
+                        <span class="pg-ellipsis">…</span>
+                    }
+
+                    <!-- Middle -->
+                    @for (int i = rangeStart; i <= rangeEnd; i++)
+                    {
+                        <a asp-action="Index"
+                           asp-route-pageNumber="@i"
+                           class="pg-btn @(i == current ? "active" : "")">
+                            @i
+                        </a>
+                    }
+
+                    @if (rangeEnd < total - 1)
+                    {
+                        <span class="pg-ellipsis">…</span>
+                    }
+
+                    <!-- Last -->
+                    @if (total > 1)
+                    {
+                        <a asp-action="Index"
+                           asp-route-pageNumber="@total"
+                           class="pg-btn @(current == total ? "active" : "")">
+                            @total
+                        </a>
+                    }
+
+                    <!-- Next -->
+                    <a asp-action="Index"
+                       asp-route-pageNumber="@(current + 1)"
+                       class="pg-btn @(!Model.HasNext ? "disabled" : "")">
+                        Next
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.btn-delete').on('click', function () {
+                var id = $(this).data('id');
+                if (confirm('Are you sure you want to delete this appointment?')) {
+                    $.post('@Url.Action("Delete", "Appointment")', { Id: id }, function () {
+                        location.reload();
+                    }).fail(function () {
+                        alert('Failed to delete the appointment.');
+                    });
+                }
+            });
+        });
+    </script>
+}

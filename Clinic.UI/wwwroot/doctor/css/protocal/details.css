@@ -1,0 +1,262 @@
+﻿/* ================================
+   Protocol Details - Medical Green Theme
+   ================================ */
+
+:root {
+    --medical-green: #0f9d6f;
+    --medical-green-dark: #0b7a56;
+    --medical-green-light: #e6f7f1;
+    --medical-green-lighter: #f2fbf8;
+    --medical-accent: #14b886;
+    --text-dark: #1f2d29;
+    --text-muted: #5f736c;
+    --border-soft: #d9ede6;
+    --danger: #d9534f;
+    --shadow-soft: 0 4px 14px rgba(15, 157, 111, 0.08);
+}
+
+.protocal-wrapper {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-soft);
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ---------- Header ---------- */
+.protocal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, var(--medical-green) 0%, var(--medical-accent) 100%);
+    color: #ffffff;
+    padding: 24px 28px;
+}
+
+.header-icon .rx-symbol {
+    font-size: 42px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.15);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+.header-text {
+    flex: 1;
+}
+
+    .header-text h3 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+.protocal-code {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.status-active {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.status-inactive {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- Info Grid ---------- */
+.protocal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 24px 28px;
+    background: var(--medical-green-lighter);
+}
+
+.info-card {
+    background: #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+    .info-card.full-width {
+        grid-column: 1 / -1;
+    }
+
+.info-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--medical-green-dark);
+    font-weight: 700;
+}
+
+.info-value {
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+/* ---------- Section Title ---------- */
+.section-title {
+    margin: 28px 28px 12px;
+    color: var(--medical-green-dark);
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 2px solid var(--medical-green-light);
+    padding-bottom: 8px;
+}
+
+/* ---------- Table ---------- */
+.table-responsive {
+    padding: 0 28px 8px;
+    overflow-x: auto;
+}
+
+.protocal-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .protocal-table thead {
+        background: var(--medical-green-light);
+    }
+
+    .protocal-table th {
+        text-align: left;
+        padding: 12px 14px;
+        font-size: 13px;
+        color: var(--medical-green-dark);
+        font-weight: 700;
+        border-bottom: 2px solid var(--border-soft);
+    }
+
+    .protocal-table td {
+        padding: 12px 14px;
+        font-size: 14px;
+        color: var(--text-dark);
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    .protocal-table tbody tr:hover {
+        background: var(--medical-green-lighter);
+    }
+
+    .protocal-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+/* ---------- Empty State ---------- */
+.empty-state {
+    margin: 0 28px 20px;
+    padding: 30px;
+    text-align: center;
+    color: var(--text-muted);
+    background: var(--medical-green-lighter);
+    border: 1px dashed var(--border-soft);
+    border-radius: 10px;
+}
+
+/* ---------- Actions ---------- */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px 28px 28px;
+}
+
+.btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--medical-green);
+    color: #ffffff;
+}
+
+    .btn-primary:hover {
+        background: var(--medical-green-dark);
+        color: #ffffff;
+    }
+
+.btn-secondary {
+    background: #ffffff;
+    color: var(--text-muted);
+    border: 1px solid var(--border-soft);
+}
+
+    .btn-secondary:hover {
+        background: var(--medical-green-lighter);
+        color: var(--text-dark);
+    }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .protocal-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .protocal-table thead {
+        display: none;
+    }
+
+    .protocal-table, .protocal-table tbody, .protocal-table tr, .protocal-table td {
+        display: block;
+        width: 100%;
+    }
+
+        .protocal-table tr {
+            margin-bottom: 12px;
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            padding: 8px 0;
+        }
+
+        .protocal-table td {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-soft);
+            padding: 10px 14px;
+        }
+
+            .protocal-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--medical-green-dark);
+                margin-right: 12px;
+            }
+
+    .protocal-header {
+        flex-wrap: wrap;
+    }
+}

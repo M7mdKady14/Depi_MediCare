@@ -1,0 +1,100 @@
+﻿@model PrescriptionProtocalDTO
+@{
+    ViewData["Title"] = Model.Id == Guid.Empty ? "Create Protocal" : "Edit Protocal";
+}
+@section Styles
+{
+    <link rel="stylesheet" href="~/doctor/css/protocal/edit.css" />
+}
+<div class="prescription-wrapper">
+    <div class="prescription-header">
+        <h3>@ViewData["Title"]</h3>
+        <span class="rx-symbol"></span>
+    </div>
+    <form asp-action="Save" method="post" id="prescriptionForm">
+        <input asp-for="Id" type="hidden" />
+        <input type="hidden" asp-for="DoctorId" />
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Protocal Name"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Code"></label>
+                <input asp-for="Code" class="form-control" placeholder="Protocal Code"/>
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Disease"></label>
+                <input asp-for="Disease" class="form-control" placeholder="Disease"/>
+                <span asp-validation-for="Disease" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-group-full">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Description of protocal ....."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h4 class="section-title">Medicines</h4>
+        <table class="table prescription-table" id="medicineTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Duration</th>
+                    <th>Instructions</th>
+                    <th width="80"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.MedicineProtocal.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" asp-for="MedicineProtocal[i].Id" />
+                            <input asp-for="MedicineProtocal[i].MedicineName" class="form-control" />
+                            <span asp-validation-for="MedicineProtocal[i].MedicineName" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="MedicineProtocal[i].Dosage" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="MedicineProtocal[i].Frequency" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="MedicineProtocal[i].Duration" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="MedicineProtocal[i].Instructions" class="form-control" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger removeRow">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-outline-primary mb-3" id="addRow">+ Add Medicine</button>
+        <div class="text-danger" id="emptyTableError" style="display:none;">
+            You must add at least one medicine.
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        window.medicineRowIndex = @Model.MedicineProtocal.Count;
+    </script>
+    <script src="~/doctor/js/protocal/edit.js"></script>
+}

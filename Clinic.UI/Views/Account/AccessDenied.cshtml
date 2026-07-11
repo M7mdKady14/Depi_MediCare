@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+
+@inject UserManager<AppUser> _userManager
+
+@{
+    var user = await _userManager.GetUserAsync(User);
+
+    var name = (user != null) ? user.FirstName + " " + user.LastName : "Doctor";
+
+    var role = await _userManager.GetRolesAsync(user);
+
+    var roleName = role.FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Denied - Dream Medical Center</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/User/accessdenied.css" />
+</head>
+<body>
+
+    <div class="ad-card">
+        <div class="ad-icon">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+
+        <div class="ad-code">ERROR 403</div>
+        <div class="ad-title">Access Denied</div>
+        <div class="ad-text">
+            You don't have permission to view this page.
+            If you believe this is a mistake, please contact support
+            or go back to your dashboard.
+        </div>
+
+        <div class="ad-actions">
+            @if (role.First() == "Admin")
+            {
+                <a href="/admin/" class="btn-ad btn-ad-primary">
+                    <i class="fa-solid fa-house"></i> Go Home
+                </a>
+                <a asp-area="admin" asp-controller="Support" asp-action="Index" class="btn-ad btn-ad-secondary">
+                    <i class="fa-solid fa-headset"></i> Contact Support
+                </a>
+            }
+            else if (role.First() == "Doctor")
+            {
+                <a href="/doctor/" class="btn-ad btn-ad-primary">
+                    <i class="fa-solid fa-house"></i> Go Home
+                </a>
+                <a asp-area="doctor" asp-controller="Support" asp-action="Index" class="btn-ad btn-ad-secondary">
+                    <i class="fa-solid fa-headset"></i> Contact Support
+                </a>
+            }
+            else
+            {
+                <a href="/" class="btn-ad btn-ad-primary">
+                    <i class="fa-solid fa-house"></i> Go Home
+                </a>
+                <a asp-area="" asp-controller="Support" asp-action="Index" class="btn-ad btn-ad-secondary">
+                    <i class="fa-solid fa-headset"></i> Contact Support
+                </a>
+            }
+        </div>
+
+        <div class="ad-brand">Dream Medical Center</div>
+    </div>
+
+</body>
+</html>

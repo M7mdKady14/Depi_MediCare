@@ -1,0 +1,298 @@
+﻿@model PageResult<AppointmentInfoDTO>
+
+@{
+    var search = ViewBag.SearchModel as DoctorSearchAppointment ?? new DoctorSearchAppointment();
+
+    int windowSize = 2;
+    int current = Model.PageNumber;
+    int total = Model.TotalPages;
+
+    int rangeStart = Math.Max(2, current - windowSize);
+    int rangeEnd = Math.Min(total - 1, current + windowSize);
+
+    int prevPage = Math.Max(1, current - 1);
+    int nextPage = Math.Min(Math.Max(total, 1), current + 1);
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/doctor/css/appointment/index.css" />
+}
+
+<div class="container-fluid">
+    <div class="admin-card">
+
+        <div class="card-header-custom">
+            <h3><i class="fas fa-calendar-check me-2"></i> Appointments</h3>
+        </div>
+
+        <div class="card-body-custom">
+
+            <!-- SEARCH -->
+            <form method="get" asp-action="Index" class="search-form row g-3 mb-4">
+
+                <div class="col-md-3">
+                    <label>Appointment Type</label>
+                    <select name="AppointmentTypeId" class="form-control-custom">
+                        <option value="">All</option>
+                        @foreach (var t in (IEnumerable<dynamic>)ViewBag.lstAppointmentTypes)
+                        {
+                            if (search.AppointmentTypeId == t.Id)
+                            {
+                                <option value="@t.Id" selected>@t.EName</option>
+                            }
+                            else
+                            {
+                                <option value="@t.Id">@t.EName</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Status</label>
+                    <select name="AppointmentStatus" class="form-control-custom">
+                        <option value="">All</option>
+                        @foreach (var status in Enum.GetValues(typeof(AppointmentStatus)))
+                        {
+                            if (search.AppointmentStatus?.ToString() == status.ToString())
+                            {
+                                <option value="@status" selected>@status</option>
+                            }
+                            else
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Doctor Schedule</label>
+                    <select name="DoctorScheduleId" class="form-control-custom">
+                        <option value="">All</option>
+                        @foreach (var s in (IEnumerable<dynamic>)ViewBag.lstDoctorSchedules)
+                        {
+                            if (search.DoctorScheduleId == s.Id)
+                            {
+                                <option value="@s.Id" selected>@s.Day (@s.StartTime - @s.EndTime)</option>
+                            }
+                            else
+                            {
+                                <option value="@s.Id">@s.Day (@s.StartTime - @s.EndTime)</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Date</label>
+                    <input type="date"
+                           name="Date"
+                           value="@(search.Date?.ToString("yyyy-MM-dd"))"
+                           class="form-control-custom" />
+                </div>
+
+                <div class="col-md-4">
+                    <label>Patient Name</label>
+                    <input type="text" name="PatientName" value="@search.PatientName" placeholder="Patient Name" class="form-control-custom" />
+                </div>
+
+                <div class="col-md-4">
+                    <label>Phone</label>
+                    <input type="text" name="PatientPhoneNumber" value="@search.PatientPhoneNumber" placeholder="Phone" class="form-control-custom" />
+                </div>
+
+                <div class="col-md-4">
+                    <label>National ID</label>
+                    <input type="text" name="PatientNationalNumber" value="@search.PatientNationalNumber" placeholder="National ID" class="form-control-custom" />
+                </div>
+
+                <div class="col-12 text-end search-actions">
+                    <a asp-action="Index" class="btn-search btn-search-reset">Reset</a>
+                    <button class="btn-search btn-search-submit" type="submit">
+                        <i class="fas fa-search me-1"></i> Search
+                    </button>
+                </div>
+
+            </form>
+
+            <!-- TABLE -->
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Items != null && Model.Items.Any())
+                        {
+                            foreach (var item in Model.Items)
+                            {
+                                var statusKey = item.AppointmentStatus.ToString();
+                                var statusClass = statusKey switch
+                                {
+                                    "Completed" => "completed",
+                                    "InProgress" => "inprogress",
+                                    "Cancelled" => "cancelled",
+                                    "Pending" => "pending",
+                                    "Confirmed" => "confirmed",
+                                    _ => "default"
+                                };
+
+                                <tr>
+                                    <td>@item.PatientName</td>
+                                    <td>@item.AppointmentTypeName</td>
+                                    <td>@item.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                                    <td><span class="badge-status @statusClass">@item.AppointmentStatus</span></td>
+                                    <td class="text-center">
+                                        <a asp-area="doctor" asp-controller="Appointment" asp-action="Details" asp-route-appointmentId="@item.Id"
+                                           class="btn-icon btn-icon-info" title="Appointment Details">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </a>
+                                        <a asp-area="doctor" asp-controller="MedicalRecord" asp-action="Details" asp-route-patientId="@item.PatientId"
+                                           class="btn-icon btn-icon-info" title="Medical Record">
+                                            <i class="fas fa-notes-medical"></i>
+                                        </a>
+                                        <a asp-area="doctor" asp-controller="Prescription" asp-action="Edit" asp-route-appointmentId="@item.Id"
+                                           class="btn btn-edit" title="Create Or Edit Prescription">
+                                            <i class="fa-solid fa-pen-to-square me-2"></i>
+                                        </a>
+                                        <a asp-area="doctor" asp-controller="Prescription" asp-action="Details" asp-route-appointmentId="@item.Id"
+                                           class="btn-icon btn-icon-info" title="Prescription">
+                                            <i class="fa-solid fa-prescription-bottle-medical me-2"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    No appointments found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION -->
+            @if (total > 0)
+            {
+                <div class="pg-row">
+
+                    <span class="pg-info">
+                        Page @current of @total — @Model.TotalCount appointments
+                    </span>
+
+                    <div class="pg-btns">
+
+                        @if (Model.HasPrev)
+                        {
+                            <a asp-action="Index"
+                               asp-route-pageNumber="@prevPage"
+                               asp-route-AppointmentTypeId="@search.AppointmentTypeId"
+                               asp-route-AppointmentStatus="@search.AppointmentStatus"
+                               asp-route-DoctorScheduleId="@search.DoctorScheduleId"
+                               asp-route-PatientName="@search.PatientName"
+                               asp-route-PatientPhoneNumber="@search.PatientPhoneNumber"
+                               asp-route-PatientNationalNumber="@search.PatientNationalNumber"
+                               asp-route-Date="@search.Date"
+                               class="pg-btn">
+                                Prev
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="pg-btn disabled">Prev</span>
+                        }
+
+                        <a asp-action="Index"
+                           asp-route-pageNumber="1"
+                           asp-route-AppointmentTypeId="@search.AppointmentTypeId"
+                           asp-route-AppointmentStatus="@search.AppointmentStatus"
+                           asp-route-DoctorScheduleId="@search.DoctorScheduleId"
+                           asp-route-PatientName="@search.PatientName"
+                           asp-route-PatientPhoneNumber="@search.PatientPhoneNumber"
+                           asp-route-PatientNationalNumber="@search.PatientNationalNumber"
+                           asp-route-Date="@search.Date"
+                           class="pg-btn @(current == 1 ? "active" : "")">
+                            1
+                        </a>
+
+                        @if (rangeStart > 2)
+                        {
+                            <span class="pg-ellipsis">…</span>
+                        }
+
+                        @for (int i = rangeStart; i <= rangeEnd; i++)
+                        {
+                            <a asp-action="Index"
+                               asp-route-pageNumber="@i"
+                               asp-route-AppointmentTypeId="@search.AppointmentTypeId"
+                               asp-route-AppointmentStatus="@search.AppointmentStatus"
+                               asp-route-DoctorScheduleId="@search.DoctorScheduleId"
+                               asp-route-PatientName="@search.PatientName"
+                               asp-route-PatientPhoneNumber="@search.PatientPhoneNumber"
+                               asp-route-PatientNationalNumber="@search.PatientNationalNumber"
+                               asp-route-Date="@search.Date"
+                               class="pg-btn @(i == current ? "active" : "")">
+                                @i
+                            </a>
+                        }
+
+                        @if (rangeEnd < total - 1)
+                        {
+                            <span class="pg-ellipsis">…</span>
+                        }
+
+                        @if (total > 1)
+                        {
+                            <a asp-action="Index"
+                               asp-route-pageNumber="@total"
+                               asp-route-AppointmentTypeId="@search.AppointmentTypeId"
+                               asp-route-AppointmentStatus="@search.AppointmentStatus"
+                               asp-route-DoctorScheduleId="@search.DoctorScheduleId"
+                               asp-route-PatientName="@search.PatientName"
+                               asp-route-PatientPhoneNumber="@search.PatientPhoneNumber"
+                               asp-route-PatientNationalNumber="@search.PatientNationalNumber"
+                               asp-route-Date="@search.Date"
+                               class="pg-btn @(current == total ? "active" : "")">
+                                @total
+                            </a>
+                        }
+
+                        @if (Model.HasNext)
+                        {
+                            <a asp-action="Index"
+                               asp-route-pageNumber="@nextPage"
+                               asp-route-AppointmentTypeId="@search.AppointmentTypeId"
+                               asp-route-AppointmentStatus="@search.AppointmentStatus"
+                               asp-route-DoctorScheduleId="@search.DoctorScheduleId"
+                               asp-route-PatientName="@search.PatientName"
+                               asp-route-PatientPhoneNumber="@search.PatientPhoneNumber"
+                               asp-route-PatientNationalNumber="@search.PatientNationalNumber"
+                               asp-route-Date="@search.Date"
+                               class="pg-btn">
+                                Next
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="pg-btn disabled">Next</span>
+                        }
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

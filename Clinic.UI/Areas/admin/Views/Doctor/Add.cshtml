@@ -1,0 +1,98 @@
+﻿@model DoctorDTO
+
+@{
+    ViewData["PageTitle"] = "Doctor Management";
+    ViewData["PageSubtitle"] = "Add New Doctor to the Dream Medical Center";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/admin/css/User/register.css" />
+}
+
+<div class="container-fluid">
+    <div class="admin-card">
+        <div class="card-header-custom">
+            <h3><i class="fas fa-user-plus me-2"></i> Add New Doctor</h3>
+        </div>
+        <div class="card-body-custom">
+            <form method="post" asp-action="Save">
+                <div class="row">
+                    <input type="hidden" asp-for="UserId"/>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Name</label>
+                            <input required asp-for="Name" class="form-control-custom" placeholder="e.g. john_dream" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Phone Number</label>
+                            <input required asp-for="PhoneNumber" class="form-control-custom" placeholder="+1 234..." />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Maximum Appointments</label>
+                            <input required asp-for="MaximumAppointments" class="form-control-custom" placeholder="Enter Maximum Appointments" />
+                            <span asp-validation-for="MaximumAppointments" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Specialization</label>
+                            <select required asp-for="SpecializationId" asp-items="@(new SelectList(ViewBag.lstSpecializations, "Id", "EName"))" class="form-control-custom">
+                                <option>Select Specialization</option>
+                            </select>
+                            <span asp-validation-for="SpecializationId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Description</label>
+                            <textarea asp-for="Description" class="form-control-custom" placeholder="Doctor Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @{
+                        var schedules = ViewBag.lstSchedules as List<ScheduleDTO>;
+                    }
+
+                    <div class="col-md-12">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Doctor Schedules</label>
+                            <select name="schedules" multiple class="form-control-custom" required>
+                                <option value="">Select Schedule</option>
+                                @foreach (var item in schedules)
+                                {
+                                    <option value="@item.Id">
+                                        @item.Day , "From"  @DateTime.Today.Add(item.StartTime).ToString("hh:mm tt")
+                                        , "To"  @DateTime.Today.Add(item.EndTime).ToString("hh:mm tt")
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <a asp-action="Index" class="btn btn-back-list me-4">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back To List
+                    </a>
+
+                    <button type="submit" class="btn btn-create-user">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Add Doctor
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

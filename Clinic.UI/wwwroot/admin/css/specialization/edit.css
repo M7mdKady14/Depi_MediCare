@@ -1,0 +1,150 @@
+﻿/* ==========================================================================
+   Specialization / Edit.css
+   Medical Blue Theme
+   ========================================================================== */
+
+:root {
+    --med-blue-900: #0b3d63;
+    --med-blue-700: #0f5f96;
+    --med-blue-600: #1476b8;
+    --med-blue-500: #2f93d6;
+    --med-blue-100: #e7f3fb;
+    --med-blue-50: #f4f9fd;
+    --med-gray-700: #47586b;
+    --med-gray-400: #8fa1b3;
+    --med-border: #dce8f2;
+    --med-danger: #d64550;
+    --med-radius: 10px;
+    --med-shadow: 0 4px 16px rgba(15, 95, 150, 0.08);
+}
+
+.page-form-container {
+    padding: 28px;
+    max-width: 760px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, var(--med-blue-50) 0%, #ffffff 220px);
+    min-height: 100%;
+}
+
+    .page-form-container .card {
+        border: 1px solid var(--med-border);
+        border-radius: var(--med-radius);
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: var(--med-shadow);
+    }
+
+    /* ---------- Header ---------- */
+    .page-form-container .card-header {
+        background: linear-gradient(135deg, var(--med-blue-700) 0%, var(--med-blue-600) 100%);
+        color: #ffffff;
+        padding: 16px 24px;
+        border-bottom: none;
+    }
+
+        .page-form-container .card-header h5 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.2px;
+        }
+
+            .page-form-container .card-header h5::before {
+                content: "\2695";
+                margin-right: 8px;
+                opacity: 0.85;
+            }
+
+    /* ---------- Body / Form ---------- */
+    .page-form-container .card-body {
+        padding: 28px 24px;
+    }
+
+    .page-form-container .form-label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--med-blue-900);
+        margin-bottom: 6px;
+    }
+
+    .page-form-container .form-control {
+        border: 1px solid var(--med-border);
+        border-radius: 6px;
+        padding: 10px 14px;
+        font-size: 0.92rem;
+        color: var(--med-gray-700);
+        background-color: var(--med-blue-50);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+        .page-form-container .form-control::placeholder {
+            color: var(--med-gray-400);
+        }
+
+        .page-form-container .form-control:focus {
+            outline: none;
+            border-color: var(--med-blue-500);
+            box-shadow: 0 0 0 3px rgba(47, 147, 214, 0.15);
+            background-color: #ffffff;
+        }
+
+    .page-form-container .text-danger {
+        display: inline-block;
+        margin-top: 4px;
+        font-size: 0.78rem;
+        color: var(--med-danger);
+    }
+
+    /* ---------- Buttons ---------- */
+    .page-form-container .btn-primary {
+        background-color: var(--med-blue-600);
+        border: 1px solid var(--med-blue-600);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        padding: 9px 22px;
+        transition: all 0.15s ease;
+    }
+
+        .page-form-container .btn-primary:hover {
+            background-color: var(--med-blue-700);
+            border-color: var(--med-blue-700);
+        }
+
+    .page-form-container .btn-secondary {
+        background-color: transparent;
+        border: 1px solid var(--med-border);
+        color: var(--med-gray-700);
+        font-weight: 500;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        padding: 9px 20px;
+        transition: all 0.15s ease;
+    }
+
+        .page-form-container .btn-secondary:hover {
+            background-color: var(--med-blue-50);
+            color: var(--med-blue-900);
+            border-color: var(--med-blue-500);
+        }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .page-form-container {
+        padding: 14px;
+    }
+
+        .page-form-container .card-body {
+            padding: 20px 16px;
+        }
+
+        .page-form-container .d-flex.justify-content-end {
+            flex-direction: column-reverse;
+        }
+
+            .page-form-container .d-flex.justify-content-end .btn {
+                width: 100%;
+                text-align: center;
+            }
+}

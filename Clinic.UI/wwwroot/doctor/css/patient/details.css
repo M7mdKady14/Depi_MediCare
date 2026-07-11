@@ -1,0 +1,264 @@
+﻿/* ==========================================================================
+   Patient Details — details.css
+   Styles for the dmc-* component classes used in Patient Details view.
+   Palette matches existing design tokens already used in the page
+   (deep teal text #1a2e28, muted teal #6b8c85, soft teal accents).
+   ========================================================================== */
+
+:root {
+    --dmc-border: #e3ece9;
+    --dmc-bg: #f7faf9;
+    --dmc-surface: #ffffff;
+    --dmc-text: #1a2e28;
+    --dmc-text-muted: #6b8c85;
+    --dmc-teal: #2f7d6e;
+    --dmc-teal-light: #e6f3f0;
+    --dmc-blue: #3b6fd6;
+    --dmc-blue-light: #eaf0fd;
+    --dmc-green: #2f9e5e;
+    --dmc-green-light: #e8f7ee;
+    --dmc-radius: 12px;
+    --dmc-shadow: 0 1px 2px rgba(26, 46, 40, 0.04), 0 2px 8px rgba(26, 46, 40, 0.05);
+}
+
+/* Page layout */
+.dmc-page-grid {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .dmc-page-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Panel */
+.dmc-panel {
+    background: var(--dmc-surface);
+    border: 1px solid var(--dmc-border);
+    border-radius: var(--dmc-radius);
+    box-shadow: var(--dmc-shadow);
+    overflow: hidden;
+}
+
+.dmc-panel-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--dmc-border);
+    background: var(--dmc-bg);
+}
+
+.dmc-panel-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dmc-text);
+    letter-spacing: 0.01em;
+}
+
+.dmc-panel-body {
+    padding: 1rem 1.25rem;
+}
+
+/* Avatar */
+.dmc-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--dmc-teal-light);
+    color: var(--dmc-teal);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* Detail rows (patient summary list) */
+.dmc-detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--dmc-border);
+}
+
+.dmc-detail-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--dmc-teal-light);
+    color: var(--dmc-teal);
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.dmc-detail-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--dmc-text-muted);
+    margin-bottom: 2px;
+}
+
+.dmc-detail-value {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--dmc-text);
+    word-break: break-word;
+}
+
+/* Badges */
+.dmc-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--dmc-bg);
+    color: var(--dmc-text-muted);
+    border: 1px solid var(--dmc-border);
+}
+
+.dmc-badge-new {
+    background: var(--dmc-teal-light);
+    color: var(--dmc-teal);
+    border-color: transparent;
+}
+
+.dmc-badge-waiting,
+.dmc-badge-created {
+    background: var(--dmc-blue-light);
+    color: var(--dmc-blue);
+    border-color: transparent;
+}
+
+.dmc-badge-inprogress {
+    background: #fff4e0;
+    color: #b3760f;
+    border-color: transparent;
+}
+
+.dmc-badge-completed {
+    background: var(--dmc-green-light);
+    color: var(--dmc-green);
+    border-color: transparent;
+}
+
+.dmc-badge-cancelled {
+    background: #fdeaea;
+    color: #c0392b;
+    border-color: transparent;
+}
+
+/* Stat cards */
+.dmc-stats {
+    display: grid;
+    gap: 1rem;
+}
+
+.dmc-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    background: var(--dmc-surface);
+    border: 1px solid var(--dmc-border);
+    border-radius: var(--dmc-radius);
+    padding: 1rem 1.1rem;
+    box-shadow: var(--dmc-shadow);
+}
+
+.dmc-stat-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+}
+
+    .dmc-stat-icon.teal {
+        background: var(--dmc-teal-light);
+        color: var(--dmc-teal);
+    }
+
+    .dmc-stat-icon.blue {
+        background: var(--dmc-blue-light);
+        color: var(--dmc-blue);
+    }
+
+    .dmc-stat-icon.green {
+        background: var(--dmc-green-light);
+        color: var(--dmc-green);
+    }
+
+.dmc-stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dmc-text);
+    line-height: 1.2;
+}
+
+.dmc-stat-label {
+    font-size: 0.75rem;
+    color: var(--dmc-text-muted);
+    margin-top: 1px;
+}
+
+/* Table */
+.dmc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+    .dmc-table thead th {
+        text-align: left;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--dmc-text-muted);
+        padding: 0.6rem 0.75rem;
+        border-bottom: 1px solid var(--dmc-border);
+    }
+
+    .dmc-table tbody td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--dmc-border);
+        color: var(--dmc-text);
+        vertical-align: middle;
+    }
+
+    .dmc-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .dmc-table tbody tr:hover {
+        background: var(--dmc-bg);
+    }
+
+    .dmc-table td p {
+        margin: 0;
+        color: var(--dmc-text-muted);
+        font-size: 0.82rem;
+    }
+
+/* Action links */
+.dmc-action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--dmc-teal);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+    .dmc-action-link:hover {
+        text-decoration: underline;
+    }

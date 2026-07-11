@@ -1,0 +1,35 @@
+﻿@model UserInfoDTO
+
+@{
+    ViewData["PageTitle"] = "My Profile";
+    ViewData["PageSubtitle"] = "Viewing official credentials for " + Model.FirstName + " " + Model.LastName;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/User/details.css" />
+}
+
+<div class="profile-card">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
+        <span class="profile-role-badge">@Model.Role</span>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">System Username</span>
+            <span class="info-value">@Model.UserName</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">User Email</span>
+            <span class="info-value">@Model.Email</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Direct Line</span>
+            <span class="info-value">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not Provided" : Model.PhoneNumber)</span>
+        </div>
+    </div>
+</div>

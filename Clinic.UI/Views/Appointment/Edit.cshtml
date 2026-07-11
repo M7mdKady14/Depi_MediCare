@@ -1,0 +1,122 @@
+﻿@model AppointmentDTO
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/appointments/edit.css" />
+}
+<div class="container-fluid">
+    <div class="admin-card">
+        <div class="card-header-custom">
+            <h3><i class="fas fa-user-plus me-2"></i> Create New Appointment</h3>
+        </div>
+        <div class="card-body-custom">
+            <form method="post" asp-action="Save">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PatientId" />
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Appointment Date</label>
+                            <input required asp-for="AppointmentDate" class="form-control-custom" type="date" id="AppointmentDate" />
+                            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                            <span id="dateWarning" class="text-danger d-block mt-1"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Doctor</label>
+                            <select asp-for="DoctorId" asp-items="@(new SelectList(ViewBag.lstDoctors, "Id", "Name"))" class="form-control-custom" id="DoctorId" required>
+                                <option value="">Select Doctor</option>
+                            </select>
+                            <span asp-validation-for="DoctorId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Doctor Schedule</label>
+                            <select asp-for="DoctorScheduleId" class="form-control-custom" id="DoctorScheduleId" required>
+                                <option value="">Select Doctor Schedule</option>
+                                @if (ViewBag.lstDoctorSchedules != null)
+                                {
+                                    foreach (var s in ViewBag.lstDoctorSchedules)
+                                    {
+                                        <option value="@s.Id">
+                                            @s.Day (@s.StartTime - @s.EndTime)
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="DoctorScheduleId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Appointment Type</label>
+                            <select asp-for="AppointmentTypeId" asp-items="@(new SelectList(ViewBag.lstAppointmentTypes, "Id", "EName"))" class="form-control-custom" required>
+                                <option value="">Select Appointment Type</option>
+                            </select>
+                            <span asp-validation-for="AppointmentTypeId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <a asp-action="Index" class="btn btn-back-list me-4">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back To List
+                    </a>
+                    <button type="submit" class="btn btn-success" id="submitBtn">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Create Appointment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+
+            $('#DoctorId, #AppointmentDate').on('change', loadSchedules);
+
+            function loadSchedules() {
+                var doctorId = $('#DoctorId').val();
+                var dateVal = $('#AppointmentDate').val();
+                var scheduleSelect = $('#DoctorScheduleId');
+                var warningEl = $('#dateWarning');
+
+                scheduleSelect.empty().append('<option value="">Select Doctor Schedule</option>');
+                warningEl.text('');
+                $('#submitBtn').prop('disabled', false);
+
+                if (!doctorId) return;
+
+                $.get('@Url.Action("GetDoctorSchedules", "Appointment")', {
+                    doctorId: doctorId,
+                    appointmentDate: dateVal || null
+                }, function (data) {
+
+                    if (data.length === 0) {
+                        if (dateVal) {
+                            warningEl.text('⚠ لا يوجد جدول للدكتور في هذا اليوم، من فضلك اختر تاريخ آخر');
+                            $('#submitBtn').prop('disabled', true);
+                        }
+                        return;
+                    }
+
+                    $.each(data, function (i, item) {
+                        scheduleSelect.append(
+                            '<option value="' + item.id + '">' +
+                            item.day + ' (' + item.startTime + ' - ' + item.endTime + ')</option>'
+                        );
+                    });
+
+                }).fail(function () {
+                    console.error('فشل تحميل جداول الدكتور');
+                });
+            }
+        });
+    </script>
+}

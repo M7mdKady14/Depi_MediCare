@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+@model LoginDTO
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dream Clinic - Staff Access</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/User/login.css" />
+</head>
+<body>
+
+    <div class="hotel-card">
+        <div class="hotel-logo">
+            <span style="font-size: 30px;">🩺</span>
+        </div>
+        <h2 class="hotel-title">Dream Clinic</h2>
+
+        <form method="post" asp-controller="Account" asp-action="SignIn" role="form">
+            <div class="mb-4">
+                <label class="form-label">Username</label>
+                <input asp-for="UserName" class="form-control" placeholder="Enter your ID" autocomplete="off" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-reserve w-100">login</button>
+        </form>
+
+        <div class="footer-text">
+            Dream Clinic <br>
+            <small>© 2026 Clinic Management System</small>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿@model PrescriptionInfoDTO
+@{
+    ViewData["Title"] = "Prescription Details";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/prescription/details.css" />
+}
+
+<div class="page-toolbar">
+    <h3>Prescription Details</h3>
+    <div class="toolbar-actions">
+        <button type="button" class="btn btn-print" id="printBtn">
+            <i class="fas fa-print"></i> Print Prescription
+        </button>
+        <a asp-controller="Appointment" asp-action="Details" asp-route-Id="@Model.AppointmentId" class="btn btn-back">Back</a>
+    </div>
+</div>
+
+<div class="rx-paper" id="printArea">
+    <div class="rx-header">
+        <div class="clinic-info">
+            <div class="clinic-logo">+</div>
+            <div>
+                <h2 class="clinic-name">Dream Medical Center</h2>
+                <span class="clinic-tagline">Your Health, Our Priority</span>
+            </div>
+        </div>
+        <div class="rx-date">
+            <span class="label">Date</span>
+            <span class="value">@Model.PrescriptionDate.ToString("dd MMM yyyy")</span>
+        </div>
+    </div>
+
+    <div class="rx-parties">
+        <div class="party-box">
+            <span class="party-label">Doctor</span>
+            <span class="party-value">Dr. @Model.DoctorName</span>
+        </div>
+        <div class="party-box">
+            <span class="party-label">Patient</span>
+            <span class="party-value">@Model.PatientName</span>
+        </div>
+    </div>
+
+    <div class="rx-symbol-bar">
+        <span class="rx-sign">℞</span>
+        <span class="rx-line"></span>
+    </div>
+
+    <div class="rx-medicines">
+        @if (Model.PrescriptionMedicines.Any())
+        {
+            <table class="rx-table">
+                <thead>
+                    <tr>
+                        <th style="width: 28px;">#</th>
+                        <th>Medicine</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Duration</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (var med in Model.PrescriptionMedicines)
+                    {
+                        <tr>
+                            <td>@(i++)</td>
+                            <td class="med-name">@med.MedicineName</td>
+                            <td>@med.Dosage</td>
+                            <td>@med.Frequency</td>
+                            <td>@med.Duration</td>
+                            <td>@med.Instructions</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="no-medicines">No medicines were added to this prescription.</p>
+        }
+    </div>
+
+    <div class="rx-footer">
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <span>Doctor's Signature</span>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/doctor/js/prescription/print.js"></script>
+}

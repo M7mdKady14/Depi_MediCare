@@ -1,0 +1,82 @@
+﻿@model List<AppointmentTypeDTO>
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/admin/css/AppointmentType/Index.css"/>
+}
+
+<div class="page-wrapper">
+
+    <div class="card appointment-card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Appointment Types</span>
+
+            <a class="btn btn-light btn-sm"
+               asp-area="admin"
+               asp-controller="AppointmentType"
+               asp-action="Edit">
+                + Add New Type
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>English Name</th>
+                        <th>Arabic Name</th>
+                        <th>Description</th>
+                        <th style="width: 160px;">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="appointment-name-en">@item.EName</td>
+
+                            <td class="appointment-name-ar">
+                                @(string.IsNullOrEmpty(item.AName) ? "-" : item.AName)
+                            </td>
+
+                            <td>
+                                <div class="appointment-desc" title="@item.Description">
+                                    @(string.IsNullOrEmpty(item.Description) ? "No description provided." : item.Description)
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a class="btn btn-outline-secondary btn-sm"
+                                       asp-area="admin"
+                                       asp-controller="AppointmentType"
+                                       asp-action="Edit"
+                                       asp-route-Id="@item.Id">
+                                        Edit
+                                    </a>
+
+                                    <a class="btn btn-outline-danger btn-sm"
+                                       asp-area="admin"
+                                       asp-controller="AppointmentType"
+                                       asp-action="Delete"
+                                       asp-route-Id="@item.Id">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

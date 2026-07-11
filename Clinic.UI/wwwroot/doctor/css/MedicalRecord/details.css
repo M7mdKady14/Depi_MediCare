@@ -1,0 +1,180 @@
+﻿:root {
+    --mr-primary: #2563eb;
+    --mr-primary-dark: #1d4ed8;
+    --mr-bg: #f4f7fb;
+    --mr-border: #e5e9f2;
+    --mr-text: #1f2937;
+    --mr-muted: #6b7280;
+    --mr-radius: 14px;
+}
+
+body {
+    background-color: var(--mr-bg);
+}
+
+.mr-page-title {
+    font-weight: 700;
+    color: var(--mr-text);
+    margin-bottom: 1.5rem;
+    border-right: 5px solid var(--mr-primary);
+    padding-right: 12px;
+}
+
+.btn-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--mr-primary), var(--mr-primary-dark));
+    color: #fff !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.3rem;
+    border-radius: 999px;
+    border: none;
+    text-decoration: none !important;
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+    transition: transform .15s ease, box-shadow .15s ease;
+    margin-bottom: 1.5rem;
+}
+
+    .btn-edit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 14px rgba(37, 99, 235, 0.35);
+        color: #fff !important;
+    }
+
+.record-card {
+    border: none;
+    border-radius: var(--mr-radius);
+    box-shadow: 0 4px 16px rgba(31, 41, 55, 0.06);
+    overflow: hidden;
+    transition: box-shadow .2s ease;
+}
+
+    .record-card:hover {
+        box-shadow: 0 8px 24px rgba(31, 41, 55, 0.10);
+    }
+
+    .record-card .card-header {
+        background: linear-gradient(135deg, var(--mr-primary), var(--mr-primary-dark));
+        color: #fff;
+        border-bottom: none;
+        padding: 0.9rem 1.25rem;
+    }
+
+        .record-card .card-header h4,
+        .record-card .card-header h5 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+    .record-card .card-body {
+        padding: 1.5rem;
+        background: #fff;
+    }
+
+/* Info grid for patient / record data */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.1rem 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px dashed var(--mr-border);
+}
+
+    .info-item.full-width {
+        grid-column: 1 / -1;
+    }
+
+.info-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--mr-muted);
+    text-transform: uppercase;
+    letter-spacing: .02em;
+}
+
+.info-value {
+    font-size: 0.98rem;
+    color: var(--mr-text);
+    font-weight: 500;
+}
+
+    .info-value.diagnosis {
+        color: var(--mr-primary-dark);
+        font-weight: 700;
+    }
+
+.badge-blood {
+    display: inline-block;
+    width: fit-content;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 3px 12px;
+    border-radius: 999px;
+}
+
+/* Tables */
+.record-card table {
+    margin-bottom: 0;
+}
+
+.record-card thead th {
+    background-color: #f1f5f9;
+    color: var(--mr-text);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-bottom: 2px solid var(--mr-border);
+}
+
+.record-card tbody tr {
+    transition: background-color .15s ease;
+}
+
+    .record-card tbody tr:hover {
+        background-color: #f8fafc;
+    }
+
+.record-card td, .record-card th {
+    vertical-align: middle;
+    padding: 0.75rem 1rem;
+}
+
+.text-muted-box {
+    text-align: center;
+    color: var(--mr-muted);
+    padding: 1.5rem 0;
+}
+
+/* Pagination */
+.pagination .page-link {
+    border-radius: 8px !important;
+    margin: 0 3px;
+    border: 1px solid var(--mr-border);
+    color: var(--mr-primary-dark);
+    font-weight: 500;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--mr-primary);
+    border-color: var(--mr-primary);
+    color: #fff;
+}
+
+.pagination .page-link:hover {
+    background-color: #eff6ff;
+}
+
+

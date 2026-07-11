@@ -1,0 +1,134 @@
+﻿@model PageResult<ProtocalInfoDTO>
+@{
+    ViewData["Title"] = "My Protocols";
+    int currentPage = Model.PageNumber;
+    int totalPages = Model.TotalPages;
+    int windowSize = 2;
+    int startPage = Math.Max(1, currentPage - windowSize);
+    int endPage = Math.Min(totalPages, currentPage + windowSize);
+}
+@section Styles
+{
+    <link rel="stylesheet" href="~/doctor/css/protocal/index.css" />
+}
+
+<div class="protocal-list-wrapper">
+
+    <div class="list-header">
+        <div class="list-header-text">
+            <span class="rx-symbol">℞</span>
+            <div>
+                <h3>My Protocols</h3>
+                <span class="list-subtitle">@Model.TotalCount protocol(s) found</span>
+            </div>
+        </div>
+        <a asp-action="Edit" class="btn btn-primary">+ New Protocol</a>
+    </div>
+
+    @if (Model.Items != null && Model.Items.Any())
+    {
+        <div class="protocal-cards">
+            @foreach (var item in Model.Items)
+            {
+                <div class="protocal-card">
+                    <div class="card-top">
+                        <div class="card-title">
+                            <h4>@item.Name</h4>
+                            <span class="protocal-code">Code: @item.Code</span>
+                        </div>
+                        <span class="status-badge status-@item.CurrentState.ToString().ToLower()">
+                            @item.CurrentState
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-info">
+                            <span class="info-label">Disease</span>
+                            <span class="info-value">@item.Disease</span>
+                        </div>
+                        <div class="card-info">
+                            <span class="info-label">Doctor</span>
+                            <span class="info-value">@item.DoctorName</span>
+                        </div>
+                        <div class="card-info full-width">
+                            <span class="info-label">Description</span>
+                            <span class="info-value">@item.Description</span>
+                        </div>
+                    </div>
+
+                    <div class="card-medicines">
+                        <span class="medicines-count">
+                            💊 @(item.MedicineProtocal?.Count ?? 0) Medicine(s)
+                        </span>
+                        @if (item.MedicineProtocal != null && item.MedicineProtocal.Any())
+                        {
+                            <div class="medicines-tags">
+                                @foreach (var med in item.MedicineProtocal.Take(3))
+                                {
+                                    <span class="med-tag">@med.MedicineName</span>
+                                }
+                                @if (item.MedicineProtocal.Count > 3)
+                                {
+                                    <span class="med-tag med-tag-more">+@(item.MedicineProtocal.Count - 3) more</span>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="card-actions">
+                        <a asp-action="Details" asp-route-Id="@item.Id" class="btn btn-outline-primary">View</a>
+                        <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-outline-info">Edit</a>
+                        <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (totalPages > 1)
+        {
+            <nav class="pagination-wrapper" aria-label="Protocol pages">
+                <ul class="pagination">
+                    <li class="@(currentPage <= 1 ? "disabled" : "")">
+                        <a asp-action="Index" asp-route-pageNumber="1" title="First page">&laquo;</a>
+                    </li>
+                    <li class="@(currentPage <= 1 ? "disabled" : "")">
+                        <a asp-action="Index" asp-route-pageNumber="@(currentPage - 1)">&lsaquo; Prev</a>
+                    </li>
+
+                    @if (startPage > 1)
+                    {
+                        <li class="ellipsis">...</li>
+                    }
+
+                    @for (int i = startPage; i <= endPage; i++)
+                    {
+                        <li class="@(i == currentPage ? "active" : "")">
+                            <a asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                        </li>
+                    }
+
+                    @if (endPage < totalPages)
+                    {
+                        <li class="ellipsis">...</li>
+                    }
+
+                    <li class="@(currentPage >= totalPages ? "disabled" : "")">
+                        <a asp-action="Index" asp-route-pageNumber="@(currentPage + 1)">Next &rsaquo;</a>
+                    </li>
+                    <li class="@(currentPage >= totalPages ? "disabled" : "")">
+                        <a asp-action="Index" asp-route-pageNumber="@totalPages" title="Last page">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+    else
+    {
+        <div class="empty-state">
+            <span class="empty-icon">℞</span>
+            <p>No protocols found yet.</p>
+            <a asp-action="Edit" class="btn btn-primary">Create your first protocol</a>
+        </div>
+    }
+
+</div>

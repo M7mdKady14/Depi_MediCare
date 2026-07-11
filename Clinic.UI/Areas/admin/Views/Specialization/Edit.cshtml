@@ -1,0 +1,76 @@
+﻿@model SpecializationDTO
+
+<div class="page-form-container">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            <h5>
+                @(Model.Id != Guid.Empty ? "Edit Specialization" : "Create New Specialization")
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-area="admin"
+                  asp-controller="Specialization"
+                  asp-action="Save"
+                  method="post">
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="EName" class="form-label">
+                            English Name *
+                        </label>
+
+                        <input asp-for="EName"
+                               class="form-control"
+                               placeholder="Enter English Name" />
+
+                        <span asp-validation-for="EName"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="AName" class="form-label">
+                            Arabic Name
+                        </label>
+
+                        <input asp-for="AName"
+                               class="form-control"
+                               placeholder="Enter Arabic Name" />
+
+                        <span asp-validation-for="AName"
+                              class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-2">
+                    <a asp-area="admin"
+                       asp-controller="Specialization"
+                       asp-action="Index"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save Specialization 
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

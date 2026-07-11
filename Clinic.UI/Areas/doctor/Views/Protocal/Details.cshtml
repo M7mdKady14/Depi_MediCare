@@ -1,0 +1,82 @@
+﻿@model ProtocalInfoDTO
+@{
+    ViewData["Title"] = "Protocol Details";
+}
+@section Styles
+{
+    <link rel="stylesheet" href="~/doctor/css/protocal/details.css" />
+}
+
+<div class="protocal-wrapper">
+
+    <div class="protocal-header">
+        <div class="header-icon">
+            <span class="rx-symbol">℞</span>
+        </div>
+        <div class="header-text">
+            <h3>@Model.Name</h3>
+            <span class="protocal-code">Code: @Model.Code</span>
+        </div>
+        <span class="status-badge status-@Model.CurrentState.ToString().ToLower()">
+            @Model.CurrentState
+        </span>
+    </div>
+
+    <div class="protocal-info-grid">
+        <div class="info-card">
+            <span class="info-label">Disease</span>
+            <span class="info-value">@Model.Disease</span>
+        </div>
+        <div class="info-card">
+            <span class="info-label">Doctor</span>
+            <span class="info-value">@Model.DoctorName</span>
+        </div>
+        <div class="info-card full-width">
+            <span class="info-label">Description</span>
+            <span class="info-value">@Model.Description</span>
+        </div>
+    </div>
+
+    <h4 class="section-title">Medicines</h4>
+
+    @if (Model.MedicineProtocal != null && Model.MedicineProtocal.Any())
+    {
+        <div class="table-responsive">
+            <table class="protocal-table">
+                <thead>
+                    <tr>
+                        <th>Medicine Name</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Duration</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var medicine in Model.MedicineProtocal)
+                    {
+                        <tr>
+                            <td data-label="Medicine Name">@medicine.MedicineName</td>
+                            <td data-label="Dosage">@medicine.Dosage</td>
+                            <td data-label="Frequency">@medicine.Frequency</td>
+                            <td data-label="Duration">@medicine.Duration</td>
+                            <td data-label="Instructions">@medicine.Instructions</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <p>No medicines added to this protocol yet.</p>
+        </div>
+    }
+
+    <div class="form-actions">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-primary">Edit Protocol</a>
+    </div>
+
+</div>

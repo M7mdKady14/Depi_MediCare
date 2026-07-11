@@ -1,0 +1,82 @@
+﻿@model PageResult<ScheduleDTO>
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/admin/css/schedule/Index.css" />
+}
+
+<div class="page-wrapper">
+
+    <div class="card schedule-card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Doctor Schedules</span>
+
+            <a class="btn btn-light btn-sm"
+               asp-area="admin"
+               asp-controller="Schedule"
+               asp-action="Edit">
+                + Add New Time
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th style="width: 160px;">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="appointment-name-en">
+                                @item.Day
+                            </td>
+
+                            <td>
+                                @DateTime.Today.Add(item.StartTime).ToString("hh:mm tt")
+                            </td>
+
+                            <td>
+                                @DateTime.Today.Add(item.EndTime).ToString("hh:mm tt")
+                            </td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a class="btn btn-outline-secondary btn-sm"
+                                       asp-area="admin"
+                                       asp-controller="Schedule"
+                                       asp-action="Edit"
+                                       asp-route-Id="@item.Id">
+                                        Edit
+                                    </a>
+
+                                    <a class="btn btn-outline-danger btn-sm"
+                                       asp-area="admin"
+                                       asp-controller="Schedule"
+                                       asp-action="Delete"
+                                       asp-route-Id="@item.Id">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

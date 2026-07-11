@@ -1,0 +1,360 @@
+﻿/* =========================================================
+   Appointments Admin Page — index.css
+   Medical Blue Theme
+   ========================================================= */
+
+:root {
+    --ap-primary: #0d6efd;
+    --ap-primary-dark: #0b5ed7;
+    --ap-primary-darker: #094db1;
+    --ap-primary-light: #eaf3ff;
+    --ap-accent: #14b8c4;
+    --ap-danger: #ef4444;
+    --ap-danger-dark: #dc2626;
+    --ap-info: #0ea5e9;
+    --ap-info-dark: #0284c7;
+    --ap-success: #10b981;
+    --ap-success-dark: #059669;
+    --ap-text: #1e293b;
+    --ap-text-muted: #64748b;
+    --ap-border: #e2e8f0;
+    --ap-bg: #f8fafc;
+    --ap-white: #ffffff;
+    --ap-radius: 14px;
+    --ap-radius-sm: 10px;
+    --ap-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --ap-shadow-md: 0 8px 20px rgba(13, 110, 253, 0.15);
+    --ap-transition: all 0.2s ease;
+}
+
+/* ---------- Layout / Card ---------- */
+.admin-card {
+    background: var(--ap-white);
+    border-radius: var(--ap-radius);
+    box-shadow: var(--ap-shadow);
+    border: 1px solid var(--ap-border);
+    overflow: hidden;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card-header-custom {
+    background: linear-gradient(135deg, var(--ap-primary) 0%, var(--ap-primary-darker) 100%);
+    color: var(--ap-white);
+    padding: 1.2rem 1.75rem;
+}
+
+    .card-header-custom h3 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-header-custom i {
+        opacity: 0.95;
+    }
+
+.card-body-custom {
+    padding: 1.75rem;
+}
+
+/* ---------- Search Form ---------- */
+.search-form {
+    background: var(--ap-bg);
+    padding: 1.6rem 1.75rem;
+    border-bottom: 1px solid var(--ap-border);
+    margin: 0 !important;
+}
+
+    .search-form label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--ap-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.4rem;
+    }
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.92rem;
+    color: var(--ap-text);
+    background-color: var(--ap-white);
+    border: 1px solid var(--ap-border);
+    border-radius: var(--ap-radius-sm);
+    transition: var(--ap-transition);
+    outline: none;
+}
+
+    .form-control-custom::placeholder {
+        color: #94a3b8;
+    }
+
+    .form-control-custom:hover {
+        border-color: #cbd5e1;
+    }
+
+    .form-control-custom:focus {
+        border-color: var(--ap-primary);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    }
+
+select.form-control-custom {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%2364748b' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.3rem;
+}
+
+input[type="date"].form-control-custom {
+    color: var(--ap-text);
+}
+
+.search-actions {
+    padding-top: 0.6rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+}
+
+.btn-search {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.5rem;
+    border-radius: var(--ap-radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--ap-transition);
+    line-height: 1.2;
+}
+
+.btn-search-submit {
+    background: var(--ap-primary);
+    color: var(--ap-white);
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.25);
+}
+
+    .btn-search-submit:hover {
+        background: var(--ap-primary-dark);
+        transform: translateY(-1px);
+        box-shadow: var(--ap-shadow-md);
+        color: var(--ap-white);
+    }
+
+.btn-search-reset {
+    background: var(--ap-white);
+    color: var(--ap-text-muted);
+    border-color: var(--ap-border);
+}
+
+    .btn-search-reset:hover {
+        background: var(--ap-bg);
+        color: var(--ap-primary-dark);
+        border-color: var(--ap-primary);
+    }
+
+/* ---------- Table ---------- */
+.table-responsive {
+    border-radius: var(--ap-radius-sm);
+    overflow: hidden;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+    .table thead.table-light th {
+        background: var(--ap-primary-light);
+        color: var(--ap-primary-darker);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #cfe2ff;
+        padding: 0.9rem 1rem;
+        white-space: nowrap;
+    }
+
+    .table tbody td {
+        padding: 0.9rem 1rem;
+        font-size: 0.92rem;
+        color: var(--ap-text);
+        vertical-align: middle;
+        border-color: var(--ap-border);
+    }
+
+    .table tbody tr {
+        transition: var(--ap-transition);
+    }
+
+.table-hover tbody tr:hover {
+    background-color: var(--ap-primary-light);
+}
+
+.table td.text-center,
+.table th.text-center {
+    text-align: center;
+}
+
+/* Status badge */
+.badge.bg-secondary {
+    background: #e2e8f0 !important;
+    color: #475569 !important;
+    font-weight: 600;
+    font-size: 0.72rem;
+    padding: 0.42em 0.85em;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+    text-transform: capitalize;
+}
+
+/* Action buttons in table */
+.table .btn {
+    border-radius: var(--ap-radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.42rem 0.8rem;
+    border: none;
+    transition: var(--ap-transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    line-height: 1.2;
+}
+
+.table .btn-info {
+    background: var(--ap-info);
+    color: var(--ap-white);
+}
+
+    .table .btn-info:hover {
+        background: var(--ap-info-dark);
+        color: var(--ap-white);
+    }
+
+.table .btn-primary {
+    background: var(--ap-accent);
+    color: var(--ap-white);
+    margin-inline-end: 0.4rem;
+}
+
+    .table .btn-primary:hover {
+        background: #0e9aa5;
+        color: var(--ap-white);
+    }
+
+.table .btn-danger {
+    background: var(--ap-danger);
+    color: var(--ap-white);
+    padding: 0.42rem 0.6rem;
+}
+
+    .table .btn-danger:hover {
+        background: var(--ap-danger-dark);
+    }
+
+.table .me-1 {
+    margin-inline-end: 0.4rem;
+}
+
+/* ---------- Pagination ---------- */
+.pg-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ap-border);
+}
+
+.pg-info {
+    font-size: 0.85rem;
+    color: var(--ap-text-muted);
+}
+
+.pg-btns {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.65rem;
+    border-radius: var(--ap-radius-sm);
+    border: 1px solid var(--ap-border);
+    background: var(--ap-white);
+    color: var(--ap-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--ap-transition);
+}
+
+    .pg-btn:hover:not(.disabled):not(.active) {
+        background: var(--ap-primary-light);
+        border-color: var(--ap-primary);
+        color: var(--ap-primary-dark);
+    }
+
+    .pg-btn.active {
+        background: var(--ap-primary);
+        border-color: var(--ap-primary);
+        color: var(--ap-white);
+        cursor: default;
+        box-shadow: 0 2px 6px rgba(13, 110, 253, 0.3);
+    }
+
+    .pg-btn.disabled {
+        opacity: 0.45;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+.pg-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    color: var(--ap-text-muted);
+    font-weight: 600;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .card-body-custom,
+    .search-form {
+        padding: 1.1rem;
+    }
+
+    .pg-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-actions {
+        justify-content: stretch;
+    }
+
+    .btn-search {
+        flex: 1;
+        justify-content: center;
+    }
+}

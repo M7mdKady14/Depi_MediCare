@@ -1,0 +1,108 @@
+﻿@model PatientDTO
+
+@{
+    ViewData["PageTitle"] = "Patient Management";
+    ViewData["PageSubtitle"] = "Add New Patient to the Dream Medical Center";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/patient/add.css" />
+}
+
+<div class="container-fluid">
+    <div class="admin-card">
+        <div class="card-header-custom">
+            <h3><i class="fas fa-user-plus me-2"></i> Add New Patient</h3>
+        </div>
+        <div class="card-body-custom">
+            <form method="post" asp-action="Save">
+                <div class="row">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">First Name</label>
+                            <input required asp-for="FirstName" class="form-control-custom" placeholder="Enter First Name" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Middle Name</label>
+                            <input required asp-for="MiddleName" class="form-control-custom" placeholder="Enter Middle Name" />
+                            <span asp-validation-for="MiddleName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Last Name</label>
+                            <input required asp-for="LastName" class="form-control-custom" placeholder="Enter Last Name" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Phone Number</label>
+                            <input required asp-for="PhoneNumber" class="form-control-custom" placeholder="+1 234..." />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Email</label>
+                            <input asp-for="Email" class="form-control-custom" type="email" placeholder="..... gmail.com" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">National Number</label>
+                            <input type="text" required asp-for="NationalNumber" class="form-control-custom" placeholder="Enter National Number" />
+                            <span asp-validation-for="NationalNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Birth Date</label>
+                            <input asp-for="BirthDate" type="date" required class="form-control-custom" />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Blood Type</label>
+                            <select required asp-for="BloodType" asp-items="ViewBag.lstBloodTypes" class="form-control-custom">
+                                <option value="">Select Blood Type</option>
+                            </select>
+                            <span asp-validation-for="BloodType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Gender</label>
+                            <select required asp-for="Gender" asp-items="ViewBag.lstGenders" class="form-control-custom">
+                                <option value="">Select Gender</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <a asp-action="Index" class="btn btn-back-list me-4">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back To List
+                    </a>
+
+                    <button type="submit" class="btn btn-create-user">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Add Patient
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

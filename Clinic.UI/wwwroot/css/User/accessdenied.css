@@ -1,0 +1,104 @@
+﻿body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.ad-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 48px 40px;
+    text-align: center;
+    max-width: 460px;
+    width: 90%;
+    justify-content:center;
+    align-items:center;
+}
+
+.ad-icon {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: #fdecea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .ad-icon i {
+        font-size: 2.4rem;
+        color: #e5484d;
+    }
+
+.ad-code {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.ad-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+}
+
+.ad-text {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.ad-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-ad {
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.btn-ad-primary {
+    background: #1D9E75;
+    color: #fff;
+}
+
+    .btn-ad-primary:hover {
+        background: #17805e;
+        color: #fff;
+    }
+
+.btn-ad-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+    .btn-ad-secondary:hover {
+        background: #e5e7eb;
+        color: #374151;
+    }
+
+.ad-brand {
+    margin-top: 28px;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}

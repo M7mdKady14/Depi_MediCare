@@ -1,0 +1,90 @@
+﻿.page-form-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card {
+    border: 1px solid #e8ecf0;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg,#185FA5,#378ADD);
+    border: none;
+    padding: 18px 24px; 
+}
+
+    .card-header h5 {
+        margin: 0;
+        color: #fff;
+        font-weight: 600;
+    }
+
+.card-body {
+    padding: 28px; 
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border: 1px solid #dbe2ea;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+    .form-control:focus {
+        border-color: #378ADD;
+        box-shadow: 0 0 0 .2rem rgba(55,138,221,.15);
+    }
+
+.input-group .form-control {
+    border-radius: 10px 0 0 10px !important;
+}
+
+.input-group-text {
+    border-radius: 0 10px 10px 0 !important;
+    background: #f8fafc;
+    border: 1px solid #dbe2ea;
+    font-weight: 500;
+    color: #5f5e5a;
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 10px 22px; 
+}
+
+.btn-primary {
+    background: #185FA5;
+    border-color: #185FA5;
+}
+
+    .btn-primary:hover {
+        background: #0C447C;
+        border-color: #0C447C;
+    }
+
+.btn-secondary {
+    background: #eef2f7;
+    border: none;
+    color: #5F5E5A;
+}
+
+    .btn-secondary:hover {
+        background: #dde5ee;
+    }
+
+.text-danger {
+    font-size: .85rem;
+    margin-top: 4px;
+    display: block;
+}
+

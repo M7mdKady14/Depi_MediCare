@@ -1,0 +1,281 @@
+﻿/* ===========================================================
+   Appointment Details - Medical Green Theme (DMC)
+   =========================================================== */
+
+:root {
+    --dmc-teal: #0e9f6e;
+    --dmc-teal-dark: #057a55;
+    --dmc-teal-darker: #046c4e;
+    --dmc-teal-light: #d1fae5;
+    --dmc-teal-lighter: #f0fdf9;
+    --dmc-blue: #185fa5;
+    --dmc-blue-light: #dbeafe;
+    --dmc-border: #d1e7dd;
+    --dmc-text: #064e3b;
+    --dmc-text-muted: #6b8c85;
+    --dmc-bg: #f6fbf9;
+    --dmc-shadow: 0 4px 14px rgba(14, 159, 110, 0.08);
+    --dmc-shadow-hover: 0 6px 20px rgba(14, 159, 110, 0.16);
+    --dmc-radius: 14px;
+}
+
+body {
+    background-color: var(--dmc-bg);
+}
+
+/* ===================== PAGE GRID ===================== */
+
+.dmc-page-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 22px;
+    padding: 24px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .dmc-page-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===================== PANEL ===================== */
+
+.dmc-panel {
+    background: #ffffff;
+    border-radius: var(--dmc-radius);
+    border: 1px solid var(--dmc-border);
+    box-shadow: var(--dmc-shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+    .dmc-panel:hover {
+        box-shadow: var(--dmc-shadow-hover);
+    }
+
+.dmc-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 22px;
+    background: linear-gradient(135deg, var(--dmc-teal) 0%, var(--dmc-teal-dark) 100%);
+}
+
+.dmc-panel-title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.3px;
+}
+
+.dmc-panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dmc-panel-body {
+    background-color: #ffffff;
+}
+
+/* ===================== BADGES (status) ===================== */
+
+.dmc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    background-color: #ffffff;
+}
+
+.dmc-badge-waiting {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.dmc-badge-confirmed {
+    background-color: #ccfbf1;
+    color: #0f766e;
+}
+
+.dmc-badge-inroom {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.dmc-badge-done {
+    background-color: #d1fae5;
+    color: #047857;
+}
+
+.dmc-badge-cancelled {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.dmc-badge-new {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+/* ===================== STATS / SUMMARY CARDS ===================== */
+
+.dmc-stats {
+    display: grid;
+    gap: 14px;
+}
+
+.dmc-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background-color: var(--dmc-teal-lighter);
+    border: 1px solid var(--dmc-border);
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .dmc-stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(14, 159, 110, 0.12);
+    }
+
+.dmc-stat-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #ffffff;
+}
+
+    .dmc-stat-icon.teal {
+        background: linear-gradient(135deg, var(--dmc-teal) 0%, var(--dmc-teal-dark) 100%);
+    }
+
+    .dmc-stat-icon.blue {
+        background: linear-gradient(135deg, var(--dmc-blue) 0%, #123f70 100%);
+    }
+
+.dmc-stat-value {
+    font-weight: 700;
+    color: var(--dmc-text);
+}
+
+.dmc-stat-label {
+    font-size: 0.78rem;
+    color: var(--dmc-text-muted);
+    margin-top: 2px;
+}
+
+/* ===================== TABLE (details rows) ===================== */
+
+.dmc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .dmc-table td {
+        padding: 13px 10px;
+        border-bottom: 1px solid var(--dmc-border);
+        font-size: 0.92rem;
+        color: var(--dmc-text);
+        vertical-align: middle;
+    }
+
+    .dmc-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .dmc-table tr:hover td {
+        background-color: var(--dmc-teal-lighter);
+    }
+
+/* ===================== BUTTONS ===================== */
+
+.dmc-btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--dmc-teal) 0%, var(--dmc-teal-dark) 100%);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(14, 159, 110, 0.25);
+}
+
+    .dmc-btn-primary:hover {
+        filter: brightness(0.94);
+        box-shadow: 0 4px 12px rgba(14, 159, 110, 0.35);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+.btn.btn-info {
+    background: linear-gradient(135deg, #0ea5c4 0%, #0284c7 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+}
+
+    .btn.btn-info:hover {
+        filter: brightness(0.95);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+.dmc-action-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 4px;
+    color: var(--dmc-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+    .dmc-action-link:hover {
+        color: var(--dmc-teal-dark);
+    }
+
+    .dmc-action-link i {
+        color: var(--dmc-teal);
+    }
+
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width: 600px) {
+    .dmc-page-grid {
+        padding: 14px;
+        gap: 14px;
+    }
+
+    .dmc-panel-header {
+        padding: 14px 16px;
+    }
+
+    .dmc-stats {
+        grid-template-columns: 1fr !important;
+    }
+}

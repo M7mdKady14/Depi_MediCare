@@ -1,0 +1,143 @@
+﻿.admin-card {
+    max-width: 1000px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eef1f5;
+    overflow: hidden;
+}
+
+.card-header-custom {
+    background: linear-gradient(135deg, #2c6e49, #3fa46a);
+    padding: 22px 30px;
+}
+
+    .card-header-custom h3 {
+        margin: 0;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+.card-body-custom {
+    padding: 30px;
+}
+
+.input-group-custom {
+    margin-bottom: 22px;
+}
+
+.form-label-custom {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #d8dde3;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #111827;
+    background: #f9fafb;
+    transition: all 0.2s ease;
+}
+
+    .form-control-custom:focus {
+        outline: none;
+        border-color: #2c6e49;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.12);
+    }
+
+    .form-control-custom::placeholder {
+        color: #9ca3af;
+    }
+
+select.form-control-custom {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7280' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+
+.text-danger {
+    display: block;
+    font-size: 12px;
+    color: #dc2626;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.btn-back-list {
+    display: inline-flex;
+    align-items: center;
+    padding: 11px 22px;
+    border-radius: 10px;
+    background: #f3f4f6;
+    color: #374151;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+    .btn-back-list:hover {
+        background: #e5e7eb;
+        color: #111827;
+    }
+
+.btn-update-patient {
+    display: inline-flex;
+    align-items: center;
+    padding: 11px 26px;
+    border-radius: 10px;
+    background: #2c6e49;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(44, 110, 73, 0.25);
+}
+
+.btn-update-patient:hover {
+    background: #245a3b;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .admin-card {
+        margin: 15px;
+        border-radius: 12px;
+    }
+
+    .card-body-custom {
+        padding: 20px;
+    }
+
+    .text-end {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-back-list,
+    .btn-create-user {
+        width: 100%;
+        justify-content: center;
+        margin: 0 !important;
+    }
+}

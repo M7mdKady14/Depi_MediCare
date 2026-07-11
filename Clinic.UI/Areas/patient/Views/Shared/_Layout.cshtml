@@ -1,0 +1,166 @@
+﻿@inject UserManager<AppUser> _userManager
+
+@{
+    var user = await _userManager.GetUserAsync(User);
+
+    var name = (user != null) ? user.FirstName + " " + user.LastName : "Patient";
+
+    var role = await _userManager.GetRolesAsync(user);
+
+    var roleName = role.FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dream Medical Center</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/_Reclayout.css" />
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div class="dmc-shell">
+
+        <!-- ════════════ SIDEBAR ════════════ -->
+        <aside class="dmc-sidebar">
+
+            <div class="dmc-brand">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="dmc-brand-logo">
+                        <i class="fa-solid fa-hospital-user"></i>
+                    </div>
+                    <div>
+                        <div class="dmc-brand-name">Dream Medical</div>
+                        <div class="dmc-brand-sub">Center</div>
+                    </div>
+                </div>
+            </div>
+
+            <nav>
+                <div class="dmc-nav-section">
+                    <div class="dmc-nav-label">Home</div>
+                    <a class="dmc-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")"
+                       asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="fa-solid fa-house fa-fw"></i> Home
+                    </a>
+                </div>
+
+                <div class="dmc-nav-section">
+                    <div class="dmc-nav-label">Profile</div>
+                    <a class="dmc-nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Profile" ? "active" : "")"
+                       asp-area="" asp-controller="Account" asp-action="Profile">
+                        <i class="fa-solid fa-user-md fa-fw"></i> Profile
+                    </a>
+                </div>
+
+                <div class="dmc-nav-section">
+                    <div class="dmc-nav-label">Medical Records</div>
+                    <a class="dmc-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "MedicalRecord" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")"
+                       asp-controller="MedicalRecord" asp-action="Index">
+                        <i class="fa-solid fa-users fa-fw"></i> Medical Records
+                    </a>
+                </div>
+
+                <div class="dmc-nav-section">
+                    <div class="dmc-nav-label">Scheduling</div>
+                    <a class="dmc-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Appointment" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")"
+                       asp-area="" asp-controller="Appointment" asp-action="Index">
+                        <i class="fa-solid fa-calendar-days fa-fw"></i> Appointments
+                    </a>
+                </div>
+
+                <div class="dmc-nav-section">
+                    <div class="dmc-nav-label">Logout</div>
+                    <a class="dmc-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Account" && ViewContext.RouteData.Values["action"]?.ToString() == "Logout" ? "active" : "")"
+                       asp-controller="Account"
+                       asp-action="Logout">
+                        <i class="fa-solid fa-right-from-bracket fa-fw"></i> Logout
+                    </a>
+                </div>
+            </nav>
+
+            <div class="dmc-sidebar-footer">
+
+                <div class="dmc-reception-chip">
+
+                    <div class="dmc-avatar">
+
+                        @(User.Identity?.Name?.Length > 0 ? User.Identity.Name[0].ToString().ToUpper() : "R")
+
+                    </div>
+
+                    <div>
+
+                        <div class="dmc-reception-name"> @(name ?? "Patient")</div>
+
+                        <div class="dmc-reception-role">
+
+                            <i class="fa-solid fa-circle" style="font-size:0.45rem;color:#1D9E75;vertical-align:middle;margin-right:3px;"></i>
+
+                            @roleName
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- ════════════ MAIN ════════════ -->
+        <div class="dmc-main">
+
+            <header class="dmc-header">
+                <div class="dmc-header-title">
+                    @(ViewData["Title"] ?? "Patient")
+                    <span>Dream Medical Center</span>
+                </div>
+
+                <div class="dmc-date-chip">
+                    <i class="fa-regular fa-calendar"></i>
+                    @DateTime.Now.ToString("dddd, MMM dd yyyy")
+                </div>
+
+                <div class="dmc-header-actions">
+                    <button class="dmc-icon-btn" title="Notifications" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="dmc-notif-dot"></span>
+                    </button>
+                    <button class="dmc-icon-btn" title="Help" aria-label="Help">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </button>
+                </div>
+            </header>
+
+            <main class="dmc-content" role="main">
+                @RenderBody()
+            </main>
+
+            <footer class="dmc-footer">
+                <div class="dmc-footer-left">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <span>&copy; @DateTime.Now.Year Dream Medical Center. All rights reserved.</span>
+                </div>
+                <div class="dmc-footer-right">
+                    <a href="#"><i class="fa-solid fa-phone"></i> Support 01010208777</a>
+                    <a href="#"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+                    <span class="dmc-footer-version">Ahmed Omar</span>
+                </div>
+            </footer>
+
+        </div><!-- /dmc-main -->
+
+    </div><!-- /dmc-shell -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

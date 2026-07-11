@@ -1,0 +1,197 @@
+﻿@inject UserManager<AppUser> _userManager
+
+@{
+    var user = await _userManager.GetUserAsync(User);
+
+    var name = (user != null) ? user.FirstName + " " + user.LastName : "Doctor";
+
+    var role = await _userManager.GetRolesAsync(user);
+
+    var roleName = role.FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title - Dream Medical Center</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/admin/css/_layout.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div>
+                    <div class="brand-text">Dream Medical</div>
+                    <div class="brand-sub">Admin Dashboard</div>
+                </div>
+            </div>
+            @{
+                var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+            }
+
+            <div class="nav-section">
+                <div class="nav-label">Main</div>
+                <a class="nav-item @(currentController == "Doctor" ? "active" : "")"
+                   asp-area="admin" asp-controller="Doctor" asp-action="Index">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    Doctors
+                </a>
+
+                <a class="nav-item @(currentController == "Patient" ? "active" : "")"
+                   asp-area="admin" asp-controller="Patient" asp-action="Index">
+                    <i class="fa-solid fa-users"></i>
+                    Patients
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-label">Management</div>
+
+                <a class="nav-item @(currentController == "AppointmentType" ? "active" : "")"
+                   asp-area="admin" asp-controller="AppointmentType" asp-action="Index">
+                    <i class="fa-solid fa-list"></i>
+                    Appointment Types
+                </a>
+
+                <a class="nav-item @(currentController == "Schedule" ? "active" : "")"
+                   asp-area="admin" asp-controller="Schedule" asp-action="Index">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedules
+                </a>
+
+                <a class="nav-item @(currentController == "Specialization" ? "active" : "")"
+                   asp-area="admin" asp-controller="Specialization" asp-action="Index">
+                    <i class="fa-solid fa-hospital"></i>
+                    Specializations
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-label">System</div>
+
+                <a class="nav-item @(currentController == "User" ? "active" : "")"
+                   asp-area="admin" asp-controller="User" asp-action="Index">
+                    <i class="fa-solid fa-users-gear"></i>
+                    User Management
+                </a>
+
+                <a class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Support" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")"
+                    asp-controller="Support" asp-action="Index">
+                    <i class="fa-solid fa-headset fa-fw"></i> Support
+                </a>
+
+                <a class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Account" && ViewContext.RouteData.Values["action"]?.ToString() == "Logout" ? "active" : "")"
+                    asp-area=""
+                    asp-controller="Account"
+                    asp-action="Logout">
+                    <i class="fa-solid fa-right-from-bracket fa-fw"></i> Logout
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-mini">
+                    <div class="user-avatar">AD</div>
+                        <div>
+                            <div class="user-mini-name">@user.FirstName @user.LastName</div>
+                            <div class="user-mini-role">@role.First()</div>
+                        </div>
+                        <a class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Account" && ViewContext.RouteData.Values["action"]?.ToString() == "Logout" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Account"
+                           asp-action="Logout">
+                            <i class="fa-solid fa-right-from-bracket fa-fw"></i> 
+                        </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main">
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+                    <div>
+                        <div class="page-title">Dashboard</div>
+
+                        <div class="breadcrumb">
+                            <i class="fa-solid fa-house"
+                               style="font-size:12px"></i>
+                            <span>›</span>
+                            <span>Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="topbar-btn" title="Search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+
+                    <div class="topbar-btn" title="Notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notif-dot"></span>
+                    </div>
+
+                    <div class="topbar-divider"></div>
+
+                    <div class="topbar-user">
+
+                        <div class="topbar-avatar">
+                            AD
+                        </div>
+
+                        <div>
+                            <div class="topbar-name">
+                                @user.FirstName @user.LastName
+                            </div>
+
+                            <div class="topbar-uname">
+                                @user.Email
+                            </div>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-down"
+                           style="font-size:14px;color:var(--gray-400);margin-left:4px">
+                        </i>
+
+                    </div>
+                </div>
+
+            </header>
+
+            <main class="content">
+                @RenderBody()
+            </main>
+
+            <footer class="footer">
+                <div class="footer-txt">
+                    © 2026 Dream Medical Center. All rights reserved.
+                </div>
+
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a asp-controller="Support" asp-action="Index">Support</a>
+                    <a href="#">Docs</a>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

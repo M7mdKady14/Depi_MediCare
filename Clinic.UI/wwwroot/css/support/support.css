@@ -1,0 +1,303 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Cairo:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #eaf3fb;
+    --bg-grid: #dbeaf7;
+    --surface: #ffffff;
+    --surface-2: #f3f9fd;
+    --border: #d3e6f5;
+    --text: #163049;
+    --muted: #5c7893;
+    --accent: #0e7fbf;
+    --accent-dim: #0a5a8a;
+    --accent-glow: rgba(14,127,191,0.25);
+    --whatsapp: #1fb17a;
+    --linkedin: #0a66c2;
+    --mail: #0e7fbf;
+    --portfolio: #1fa3c9;
+}
+
+/* ===== Page shell =====
+   This targets body directly. If your _Layout.cshtml already sets
+   background/padding on body, either drop this block or scope it
+   to a wrapper div instead. */
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at 15% 10%, rgba(14,127,191,0.10), transparent 40%), radial-gradient(circle at 85% 90%, rgba(31,163,201,0.10), transparent 45%), var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px), linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+        background-size: 42px 42px;
+        mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 75%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+* {
+    box-sizing: border-box;
+}
+
+/* ===== Eyebrow label ===== */
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    margin: 40px auto 18px;
+    direction: ltr;
+    justify-content: center;
+    max-width: 560px;
+    position: relative;
+    z-index: 1;
+    padding: 0 16px;
+}
+
+    .eyebrow .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(14,127,191,0.18);
+        animation: pulse 2s infinite;
+    }
+
+@keyframes pulse {
+    0%,100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .4;
+    }
+}
+
+/* ===== Card ===== */
+.card {
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 44px 36px 36px;
+    box-shadow: 0 30px 60px -20px rgba(20,60,90,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+    max-width: 560px;
+    margin: 0 auto 26px;
+    z-index: 1;
+}
+
+    .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 40px;
+        left: 40px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+    }
+
+.avatar-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.avatar {
+    width: 108px;
+    height: 108px;
+    border-radius: 26px;
+    background: linear-gradient(145deg, var(--accent), var(--accent-dim));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 0 4px rgba(14,127,191,0.15), 0 20px 40px -12px var(--accent-glow);
+    margin-bottom: 18px;
+    position: relative;
+}
+
+    /* photo, once ~/images/1.jpeg is uncommented in the view */
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* fallback initials shown only while the avatar div is empty (no <img>) */
+    .avatar:empty::before {
+        content: "AO";
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 800;
+        font-size: 34px;
+        color: #fff;
+        letter-spacing: -1px;
+    }
+
+    .avatar::after {
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--accent);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        direction: ltr;
+    }
+
+.name {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    background: rgba(14,127,191,0.08);
+    border: 1px solid rgba(14,127,191,0.25);
+    padding: 5px 12px;
+    border-radius: 999px;
+    direction: ltr;
+}
+
+.msg {
+    font-size: 14.5px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.9;
+    margin-bottom: 30px;
+    padding: 0 6px;
+}
+
+/* ===== Links list ===== */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+
+    .link:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent-glow);
+        background: var(--surface-2);
+    }
+
+    .link:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+.icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .icon.wa {
+        background: rgba(31,177,122,0.12);
+        color: var(--whatsapp);
+    }
+
+    .icon.li {
+        background: rgba(10,102,194,0.12);
+        color: var(--linkedin);
+    }
+
+    .icon.mail {
+        background: rgba(14,127,191,0.12);
+        color: var(--mail);
+    }
+
+    .icon.pf {
+        background: rgba(31,163,201,0.12);
+        color: var(--portfolio);
+    }
+
+.link-text {
+    flex: 1;
+    text-align: right;
+}
+
+.link-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.link-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    direction: ltr;
+    text-align: left;
+    display: block;
+}
+
+.arrow {
+    color: var(--muted);
+    font-size: 16px;
+}
+
+/* ===== Footer note ===== */
+.footer-note {
+    max-width: 560px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #7c93a8;
+    direction: ltr;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+    padding: 0 16px;
+}
+
+@media (max-width: 420px) {
+    .card {
+        padding: 34px 22px 28px;
+    }
+
+    .name {
+        font-size: 21px;
+    }
+}

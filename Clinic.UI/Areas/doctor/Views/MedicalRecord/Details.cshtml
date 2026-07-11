@@ -1,0 +1,474 @@
+﻿@model VmMedicalRecord
+
+@{
+    ViewData["Title"] = "Medical Record Info";
+    var record = Model.DocMedicalRecord;
+}
+
+@{
+    <link rel="stylesheet" href="~/doctor/css/MedicalRecord/details.css"/>
+}
+
+<div class="container mt-4">
+
+    <h2 class="mr-page-title">Medical Record Info</h2>
+
+    <a asp-action="Edit" asp-route-Id="@record.Id" class="btn btn-edit">
+        <i class="bi bi-pencil-square"></i> Edit
+    </a>
+
+    <!-- ====== بيانات المريض ====== -->
+    <div class="card mb-4 record-card">
+        <div class="card-header">
+            <h4><i class="bi bi-person-fill"></i>Patient info</h4>
+        </div>
+        <div class="card-body">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Patient Name</span>
+                    <span class="info-value">@record.PatientName</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">National Number</span>
+                    <span class="info-value">@record.NationalNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone Number</span>
+                    <span class="info-value">@record.PhoneNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">@(string.IsNullOrEmpty(record.Email) ? "—" : record.Email)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Birth Date</span>
+                    <span class="info-value">@record.BirthDate.ToString("yyyy-MM-dd")</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Gender</span>
+                    <span class="info-value">@record.Gender</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Blood Type</span>
+                    <span class="badge-blood">@record.BloodType</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Doctor</span>
+                    <span class="info-value">@record.DoctorName</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== بيانات السجل الطبي ====== -->
+    <div class="card mb-4 record-card">
+        <div class="card-header">
+            <h4><i class="bi bi-file-medical-fill"></i>Medical Record Info</h4>
+        </div>
+        <div class="card-body">
+            <div class="info-grid">
+                <div class="info-item full-width">
+                    <span class="info-label">Diagnosis</span>
+                    <span class="info-value diagnosis">@record.Diagnosis</span>
+                </div>
+                <div class="info-item full-width">
+                    <span class="info-label">Allergy</span>
+                    <span class="info-value">@(string.IsNullOrEmpty(record.Allergy) ? "Not Found" : record.Allergy)</span>
+                </div>
+                <div class="info-item full-width">
+                    <span class="info-label">Chronic Disease</span>
+                    <span class="info-value">@(string.IsNullOrEmpty(record.ChronicDisease) ? "Not Found" : record.ChronicDisease)</span>
+                </div>
+                <div class="info-item full-width">
+                    <span class="info-label">Current Medications</span>
+                    <span class="info-value">@(string.IsNullOrEmpty(record.CurrentMedications) ? "Not Found" : record.CurrentMedications)</span>
+                </div>
+                <div class="info-item full-width">
+                    <span class="info-label">Notes</span>
+                    <span class="info-value">@(string.IsNullOrEmpty(record.Notes) ? "Not Found" : record.Notes)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="Test" asp-action="Add" asp-route-medicalRecordId="@record.Id" class="btn btn-primary">
+            <i class="bi bi-pencil-square"></i> Add New Test
+        </a>
+    </div>
+
+    <br />
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Tests</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Tests.Items != null && Model.Tests.Items.Any())
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Test</th>
+                            <th>Description</th>
+                            <th>Diagnosis</th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var test in Model.Tests.Items)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="~/Uploads/Tests/@test.File" target="_blank">
+                                        @test.File
+                                    </a>    
+                                </td>
+                                <td>@test.Description</td>
+                                <td>@test.Diagnosis</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-controller="Test" asp-action="Edit" asp-route-Id="@test.Id">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-danger" asp-controller="Test" asp-action="Delete" asp-route-Id="@test.Id">
+                                        Delete 
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                 <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center">
+
+                        @{
+                            int currentPage = Model.Tests.PageNumber;
+                            int totalPages = Model.Tests.TotalPages;
+                            int windowSize = 2;
+
+                            int startPage = Math.Max(1, currentPage - windowSize);
+                            int endPage = Math.Min(totalPages, currentPage + windowSize);
+
+                            Func<int, string> pageUrl = (int page) => Url.Action("Details", new
+                            {
+                                patientId = record.PatientId,
+                                TestPageNumber = page,
+                                TestPageSize = Model.Tests.PageSize,
+                                MedicalRadilogyPageNumber = Model.MedicalRadiologies.PageNumber,
+                                MedicalRadilogyPageSize = Model.MedicalRadiologies.PageSize,
+                                AppointmentPageNumber = Model.Appointments.PageNumber,
+                                AppointmentPageSize = Model.Appointments.PageSize
+                            });
+                        }
+
+                        <!-- First & Previous -->
+                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@pageUrl(1)" aria-label="First">&laquo;</a>
+                        </li>
+                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@pageUrl(currentPage - 1 < 1 ? 1 : currentPage - 1)" aria-label="Previous">&lsaquo;</a>
+                        </li>
+
+                        <!-- Leading ellipsis -->
+                        @if (startPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@pageUrl(1)">1</a>
+                            </li>
+                            if (startPage > 2)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+                        }
+
+                        <!-- Page window -->
+                        @for (int i = startPage; i <= endPage; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link" href="@pageUrl(i)">@i</a>
+                            </li>
+                        }
+
+                        <!-- Trailing ellipsis -->
+                        @if (endPage < totalPages)
+                        {
+                            if (endPage < totalPages - 1)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+                            <li class="page-item">
+                                <a class="page-link" href="@pageUrl(totalPages)">@totalPages</a>
+                            </li>
+                        }
+
+                        <!-- Next & Last -->
+                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                            <a class="page-link" href="@pageUrl(currentPage + 1 > totalPages ? totalPages : currentPage + 1)" aria-label="Next">&rsaquo;</a>
+                        </li>
+                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                            <a class="page-link" href="@pageUrl(totalPages)" aria-label="Last">&raquo;</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <p class="text-muted-box">No Tests Recorded.</p>
+            }
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="MedicalRadiology" asp-action="Add" asp-route-medicalRecordId="@record.Id" class="btn btn-primary">
+            <i class="bi bi-pencil-square"></i> Add New Medical Radiology
+        </a>
+    </div>
+
+    <br />
+
+    <!-- ====== الأشعة (Medical Radiologies) ====== -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Medical Radilogies</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.MedicalRadiologies.Items != null && Model.MedicalRadiologies.Items.Any())
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Medical Radiology</th>
+                            <th>Description</th>
+                            <th>Diagnosis</th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var radiology in Model.MedicalRadiologies.Items)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="~/Uploads/MedicalRadiologies/@radiology.File" target="_blank">
+                                        @radiology.File
+                                    </a>
+                                </td>
+                                <td>@radiology.Description</td>
+                                <td>@radiology.Diagnosis</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-controller="MedicalRadiology" asp-action="Edit" asp-route-Id="@radiology.Id">
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-danger" asp-controller="MedicalRadiology" asp-action="Delete" asp-route-Id="@radiology.Id">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <nav>
+                    <ul class="pagination justify-content-center">
+
+                        @{
+                            int mrCurrentPage = Model.MedicalRadiologies.PageNumber;
+                            int mrTotalPages = Model.MedicalRadiologies.TotalPages;
+                            int mrWindowSize = 2;
+
+                            int mrStartPage = Math.Max(1, mrCurrentPage - mrWindowSize);
+                            int mrEndPage = Math.Min(mrTotalPages, mrCurrentPage + mrWindowSize);
+
+                            Func<int, string> mrPageUrl = (int page) => Url.Action("Details", new
+                            {
+                                patientId = record.PatientId,
+                                TestPageNumber = Model.Tests.PageNumber,
+                                TestPageSize = Model.Tests.PageSize,
+                                MedicalRadilogyPageNumber = page,
+                                MedicalRadilogyPageSize = Model.MedicalRadiologies.PageSize,
+                                AppointmentPageNumber = Model.Appointments.PageNumber,
+                                AppointmentPageSize = Model.Appointments.PageSize
+                            });
+                        }
+
+                        <li class="page-item @(mrCurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@mrPageUrl(1)" aria-label="First">&laquo;</a>
+                        </li>
+                        <li class="page-item @(mrCurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@mrPageUrl(mrCurrentPage - 1 < 1 ? 1 : mrCurrentPage - 1)" aria-label="Previous">&lsaquo;</a>
+                        </li>
+
+                        @if (mrStartPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@mrPageUrl(1)">1</a>
+                            </li>
+                            if (mrStartPage > 2)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+                        }
+
+                        @for (int i = mrStartPage; i <= mrEndPage; i++)
+                        {
+                            <li class="page-item @(i == mrCurrentPage ? "active" : "")">
+                                <a class="page-link" href="@mrPageUrl(i)">@i</a>
+                            </li>
+                        }
+
+                        @if (mrEndPage < mrTotalPages)
+                        {
+                            if (mrEndPage < mrTotalPages - 1)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+                            <li class="page-item">
+                                <a class="page-link" href="@mrPageUrl(mrTotalPages)">@mrTotalPages</a>
+                            </li>
+                        }
+
+                        <li class="page-item @(mrCurrentPage == mrTotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@mrPageUrl(mrCurrentPage + 1 > mrTotalPages ? mrTotalPages : mrCurrentPage + 1)" aria-label="Next">&rsaquo;</a>
+                        </li>
+                        <li class="page-item @(mrCurrentPage == mrTotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@mrPageUrl(mrTotalPages)" aria-label="Last">&raquo;</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <p class="text-muted-box">No Medical Radiologies Found.</p>
+            }
+        </div>
+    </div>
+
+    <!-- ====== المواعيد (Appointments) ====== -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Last Appointments</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Appointments.Items != null && Model.Appointments.Items.Any())
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Prescription</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appointment in Model.Appointments.Items)
+                        {
+                            <tr>
+                                <td>@appointment.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                                <td>@appointment.AppointmentTypeName</td>
+                                <td>@appointment.AppointmentStatus</td>
+                                <td>
+                                    @if (appointment.AppointmentStatus == AppointmentStatus.InProgress || appointment.AppointmentStatus == AppointmentStatus.Completed) 
+                                    {
+                                        <a class="btn btn-info d-flex align-items-center justify-content-center"
+                                        asp-controller="Prescription"
+                                        asp-action="Details"
+                                        asp-route-appointmentId="@appointment.Id">
+                                            <i class="fa-solid fa-prescription me-2"></i>
+                                            Prescription
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No Prescription</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center">
+
+                        @{
+                            int apCurrentPage = Model.Appointments.PageNumber;
+                            int apTotalPages = Model.Appointments.TotalPages;
+                            int apWindowSize = 2;
+
+                            int apStartPage = Math.Max(1, apCurrentPage - apWindowSize);
+                            int apEndPage = Math.Min(apTotalPages, apCurrentPage + apWindowSize);
+
+                            Func<int, string> apPageUrl = (int page) => Url.Action("Details", new
+                            {
+                                patientId = record.PatientId,
+                                TestPageNumber = Model.Tests.PageNumber,
+                                TestPageSize = Model.Tests.PageSize,
+                                MedicalRadilogyPageNumber = Model.MedicalRadiologies.PageNumber,
+                                MedicalRadilogyPageSize = Model.MedicalRadiologies.PageSize,
+                                AppointmentPageNumber = page,
+                                AppointmentPageSize = Model.Appointments.PageSize
+                            });
+                        }
+
+                        <li class="page-item @(apCurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@apPageUrl(1)" aria-label="First">&laquo;</a>
+                        </li>
+                        <li class="page-item @(apCurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@apPageUrl(apCurrentPage - 1 < 1 ? 1 : apCurrentPage - 1)" aria-label="Previous">&lsaquo;</a>
+                        </li>
+
+                        @if (apStartPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@apPageUrl(1)">1</a>
+                            </li>
+                            if (apStartPage > 2)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+                        }
+
+                        @for (int i = apStartPage; i <= apEndPage; i++)
+                        {
+                            <li class="page-item @(i == apCurrentPage ? "active" : "")">
+                                <a class="page-link" href="@apPageUrl(i)">@i</a>
+                            </li>
+                        }
+
+                        @if (apEndPage < apTotalPages)
+                        {
+                            if (apEndPage < apTotalPages - 1)
+                            {
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            }
+                            <li class="page-item">
+                                <a class="page-link" href="@apPageUrl(apTotalPages)">@apTotalPages</a>
+                            </li>
+                        }
+
+                        <li class="page-item @(apCurrentPage == apTotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@apPageUrl(apCurrentPage + 1 > apTotalPages ? apTotalPages : apCurrentPage + 1)" aria-label="Next">&rsaquo;</a>
+                        </li>
+                        <li class="page-item @(apCurrentPage == apTotalPages ? "disabled" : "")">
+                            <a class="page-link" href="@apPageUrl(apTotalPages)" aria-label="Last">&raquo;</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <p class="text-muted-box">No Appointments Found.</p>
+            }
+        </div>
+    </div>
+</div>

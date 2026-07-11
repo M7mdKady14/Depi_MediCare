@@ -1,0 +1,112 @@
+﻿@using Clinic.Application.DTOs.MedicalRecordDTOs
+@model MedicalRadiologyDTO
+
+@{
+    ViewData["PageTitle"] = "Medical Radiology Management";
+    ViewData["PageSubtitle"] = "Add New Medical Radiology to Patient Medical Record";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/doctor/css/test/add.css" />
+}
+
+<div class="container-fluid">
+    <div class="admin-card">
+        <div class="card-header-custom">
+            <h3><i class="fas fa-user-plus me-2"></i> Add New Medical Radiology</h3> 
+        </div>
+        <div class="card-body-custom">
+            <form method="post" asp-action="Save" enctype="multipart/form-data">
+                <div class="row">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="MedicalRecordId" />
+                                       <div class="col-md-12">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">File</label>
+
+                            <div id="tbImgSrc"
+                                    class="mb-3 position-relative d-flex align-items-center justify-content-center"
+                                    style="width:250px; height:250px; border-radius:2px; border-style:solid; cursor:pointer;"
+                                    onclick="document.getElementById('imageInput').click()">
+                                <img src="~/Uploads/Tests/@Model.File" alt="" class="img-fluid image-preview" id="tbImgName" style="max-width:100%; max-height:100%;">
+                                <span id="plusIcon"
+                                        class="position-absolute text-muted"
+                                        style="font-size: 3rem; pointer-events: none; user-select: none;">+</span>
+                            </div>
+
+                            <!-- Hidden file input -->
+                            <input id="imageInput"
+                                    class="d-none"
+                                    type="file"
+                                    name="file"
+                                    value="~/Uploads/Tests/@Model.File"
+                                    onchange="upload.UploadDefaultImg(event)"
+                                    accept=".jpg, .jpeg, .png, .pdf">
+
+                            <div>
+                                <p>@(Model.File == null ? "No Files Yet" : Model.File.ToLower())</p>
+                            </div>
+
+                            <button type="button"
+                                    class="btn btn-danger mt-2"
+                                    onclick="deleteFile()">
+                                Delete File
+                            </button>
+
+                            <span asp-validation-for="File" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="input-group-custom">
+                            <label class="form-label-custom">Description</label>
+                            <textarea asp-for="Description" class="form-control-custom" placeholder="Enter Test Description">
+                            </textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <a asp-action="Index" class="btn btn-back-list me-4">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back To List
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Add Medical Radiology
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var CourseMediaImgName = "";
+        var CourseMediaImgBase64 = "";
+        var upload = {
+            UploadDefaultImg: function (e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+
+                reader.onloadend = () => {
+                    CourseMediaImgName = file.name;
+                    CourseMediaImgBase64 = reader.result.slice(reader.result.indexOf('base64,') + 7);
+                    $("#tbImgName").attr("src", reader.result);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // Simulate sidebar toggle for demonstration
+        $(".sidebar-toggle").click(function () {
+            $("body").toggleClass("sidebar-open");
+        });
+    </script>
+}

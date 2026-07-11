@@ -1,0 +1,78 @@
+﻿@model DoctorInfoDTO
+
+@{
+    ViewData["PageTitle"] = "Doctor Details";
+    ViewData["PageSubtitle"] = "Viewing official credentials for " + Model.Name;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/admin/css/doctor/details.css" />
+}
+
+<div class="profile-card">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <h2 class="profile-name">@Model.Name</h2>
+        <span class="profile-role-badge">Doctor</span>
+    </div>
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">Specialization</span>
+            <span class="info-value">@Model.SpecializationName</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Maximum Appointments</span>
+            <span class="info-value">@Model.MaximumAppointments</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Direct Line</span>
+            <span class="info-value">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not Provided" : Model.PhoneNumber)</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Description</span>
+            <span class="info-value">@Model.Description</span>
+        </div>
+        <div class="schedule-section">
+            <span class="info-label">Weekly Schedule</span>
+            <table class="table-info">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.DoctorSchedules.Any())
+                    {
+                        @foreach (var item in Model.DoctorSchedules)
+                        {
+                            <tr>
+                                <td>@item.Day</td>
+                                <td>
+                                    @DateTime.Today.Add(item.StartTime).ToString("hh:mm tt")
+                                </td>
+                                <td>
+                                    @DateTime.Today.Add(item.EndTime).ToString("hh:mm tt")
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="no-schedule">No schedule available</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn-edit me-2"><i class="fas fa-edit me-1"></i> Edit Doctor</a>
+        <a asp-action="Index" class="btn-edit" style="border-color: #ccc; color: #888;">Back to List</a>
+    </div>
+</div>

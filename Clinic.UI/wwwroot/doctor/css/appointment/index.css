@@ -1,0 +1,275 @@
+﻿/* ============================================
+   Medical Green Theme — Doctor Appointments Search
+   ============================================ */
+
+:root {
+    --med-primary: #2c6e49;
+    --med-primary-dark: #245a3b;
+    --med-light-blue: #f1f5ee;
+    --med-bg: #f8faf7;
+    --med-border: #e3ddc9;
+    --med-text: #1e293b;
+    --med-muted: #64748b;
+    --med-radius: 14px;
+    --status-completed-bg: #dcf5e6;
+    --status-completed-text: #15803d;
+    --status-inprogress-bg: #fff4d6;
+    --status-inprogress-text: #b45309;
+    --status-cancelled-bg: #fde2e2;
+    --status-cancelled-text: #b91c1c;
+    --status-pending-bg: #eaf3ff;
+    --status-pending-text: #1d4ed8;
+    --status-confirmed-bg: #e6f7ee;
+    --status-confirmed-text: #15803d;
+    --status-default-bg: #eef1f5;
+    --status-default-text: #475569;
+}
+
+body {
+    background-color: var(--med-bg);
+}
+
+/* ===== Card container ===== */
+.admin-card {
+    background: #fff;
+    border-radius: var(--med-radius);
+    border: 1px solid var(--med-border);
+    box-shadow: 0 4px 18px rgba(44, 110, 73, 0.06);
+    overflow: hidden;
+}
+
+.card-header-custom {
+    background: linear-gradient(135deg, var(--med-primary), var(--med-primary-dark));
+    color: #fff;
+    padding: 1rem 1.5rem;
+}
+
+    .card-header-custom h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+.card-body-custom {
+    padding: 1.5rem;
+}
+
+/* ===== Search form ===== */
+.search-form label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--med-muted);
+    margin-bottom: 4px;
+    display: block;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--med-border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--med-text);
+    background-color: #fff;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+    .form-control-custom:focus {
+        outline: none;
+        border-color: var(--med-primary);
+        box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.12);
+    }
+
+.search-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn-search {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.4rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+    .btn-search:hover {
+        transform: translateY(-1px);
+    }
+
+.btn-search-submit {
+    background: linear-gradient(135deg, var(--med-primary), var(--med-primary-dark));
+    color: #fff !important;
+    box-shadow: 0 3px 10px rgba(44, 110, 73, 0.25);
+}
+
+.btn-search-reset {
+    background-color: #f1f4f8;
+    color: var(--med-text) !important;
+    border: 1px solid var(--med-border);
+}
+
+/* ===== Table ===== */
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--med-border);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+    .table thead th {
+        background-color: var(--med-light-blue);
+        color: var(--med-primary-dark);
+        font-weight: 600;
+        font-size: 0.85rem;
+        border-bottom: 2px solid var(--med-border);
+        white-space: nowrap;
+    }
+
+    .table td {
+        vertical-align: middle;
+        color: var(--med-text);
+        font-size: 0.92rem;
+    }
+
+    .table-hover tbody tr:hover,
+    .table tbody tr:hover {
+        background-color: var(--med-light-blue);
+    }
+
+/* ===== Status badges ===== */
+.badge-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+    .badge-status.completed {
+        background-color: var(--status-completed-bg);
+        color: var(--status-completed-text);
+    }
+
+    .badge-status.inprogress {
+        background-color: var(--status-inprogress-bg);
+        color: var(--status-inprogress-text);
+    }
+
+    .badge-status.cancelled {
+        background-color: var(--status-cancelled-bg);
+        color: var(--status-cancelled-text);
+    }
+
+    .badge-status.pending {
+        background-color: var(--status-pending-bg);
+        color: var(--status-pending-text);
+    }
+
+    .badge-status.confirmed {
+        background-color: var(--status-confirmed-bg);
+        color: var(--status-confirmed-text);
+    }
+
+    .badge-status.default {
+        background-color: var(--status-default-bg);
+        color: var(--status-default-text);
+    }
+
+/* ===== Action icon buttons ===== */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    text-decoration: none !important;
+    transition: transform .15s ease, opacity .15s ease;
+    cursor: pointer;
+}
+
+    .btn-icon:hover {
+        transform: translateY(-1px);
+        opacity: 0.9;
+    }
+
+.btn-icon-info {
+    background-color: var(--med-light-blue);
+    color: var(--med-primary-dark) !important;
+}
+
+/* ===== Pagination ===== */
+.pg-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.pg-info {
+    font-size: 0.88rem;
+    color: var(--med-muted);
+    font-weight: 500;
+}
+
+.pg-btns {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid var(--med-border);
+    color: var(--med-primary-dark);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none !important;
+    background-color: #fff;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+    .pg-btn:hover {
+        background-color: var(--med-light-blue);
+    }
+
+    .pg-btn.active {
+        background-color: var(--med-primary);
+        border-color: var(--med-primary);
+        color: #fff !important;
+    }
+
+    .pg-btn.disabled {
+        color: var(--med-muted) !important;
+        background-color: #f1f4f8;
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+.pg-ellipsis {
+    color: var(--med-muted);
+    padding: 0 4px;
+    user-select: none;
+}

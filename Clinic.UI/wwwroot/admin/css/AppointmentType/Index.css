@@ -1,0 +1,189 @@
+﻿/* ==========================================================================
+   AppointmentType / Index.css
+   Medical Blue Theme
+   ========================================================================== */
+
+:root {
+    --med-blue-900: #0b3d63;
+    --med-blue-700: #0f5f96;
+    --med-blue-600: #1476b8;
+    --med-blue-500: #2f93d6;
+    --med-blue-100: #e7f3fb;
+    --med-blue-50: #f4f9fd;
+    --med-gray-700: #47586b;
+    --med-gray-400: #8fa1b3;
+    --med-border: #dce8f2;
+    --med-danger: #d64550;
+    --med-danger-soft: #fbe9ea;
+    --med-radius: 10px;
+    --med-shadow: 0 4px 16px rgba(15, 95, 150, 0.08);
+}
+
+.page-wrapper {
+    padding: 28px;
+    background: linear-gradient(180deg, var(--med-blue-50) 0%, #ffffff 220px);
+    min-height: 100%;
+}
+
+/* ---------- Card ---------- */
+.appointment-card {
+    border: 1px solid var(--med-border);
+    border-radius: var(--med-radius);
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: var(--med-shadow);
+}
+
+    .appointment-card .card-header {
+        background: linear-gradient(135deg, var(--med-blue-700) 0%, var(--med-blue-600) 100%);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.2px;
+        padding: 16px 22px;
+        border-bottom: none;
+    }
+
+        .appointment-card .card-header::before {
+            content: "\2695";
+            margin-right: 8px;
+            opacity: 0.85;
+        }
+
+        .appointment-card .card-header .btn-light {
+            background-color: #ffffff;
+            color: var(--med-blue-700);
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 14px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+            .appointment-card .card-header .btn-light:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+                color: var(--med-blue-900);
+            }
+
+/* ---------- Table ---------- */
+.table-responsive {
+    padding: 4px 4px 8px;
+}
+
+.appointment-card table.table {
+    margin-bottom: 0;
+}
+
+    .appointment-card table.table thead th {
+        background-color: var(--med-blue-100);
+        color: var(--med-blue-900);
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        letter-spacing: 0.6px;
+        font-weight: 700;
+        border-bottom: 2px solid var(--med-blue-500);
+        padding: 12px 18px;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .appointment-card table.table tbody td {
+        padding: 14px 18px;
+        color: var(--med-gray-700);
+        border-bottom: 1px solid var(--med-border);
+        vertical-align: middle;
+        font-size: 0.92rem;
+        text-align: center;
+    }
+
+    .appointment-card table.table tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+        .appointment-card table.table tbody tr:hover {
+            background-color: var(--med-blue-50);
+        }
+
+        .appointment-card table.table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+/* ---------- Cell content ---------- */
+.appointment-name-en {
+    font-weight: 600;
+    color: var(--med-blue-900);
+}
+
+.appointment-name-ar {
+    font-weight: 500;
+    color: var(--med-blue-700);
+    direction: rtl;
+    text-align: center;
+}
+
+.appointment-desc {
+    max-width: 380px;
+    margin: 0 auto;
+    color: var(--med-gray-400);
+    font-style: italic;
+    font-size: 0.86rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.appointment-card table.table tbody td .d-flex {
+    justify-content: center;
+}
+
+/* ---------- Action buttons ---------- */
+.appointment-card .btn-outline-secondary {
+    color: var(--med-blue-700);
+    border-color: var(--med-blue-500);
+    background: transparent;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    padding: 5px 12px;
+    transition: all 0.15s ease;
+}
+
+    .appointment-card .btn-outline-secondary:hover {
+        background-color: var(--med-blue-600);
+        border-color: var(--med-blue-600);
+        color: #ffffff;
+    }
+
+.appointment-card .btn-outline-danger {
+    color: var(--med-danger);
+    border-color: var(--med-danger);
+    background: var(--med-danger-soft);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    padding: 5px 12px;
+    transition: all 0.15s ease;
+}
+
+    .appointment-card .btn-outline-danger:hover {
+        background-color: var(--med-danger);
+        border-color: var(--med-danger);
+        color: #ffffff;
+    }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .page-wrapper {
+        padding: 14px;
+    }
+
+    .appointment-desc {
+        max-width: 160px;
+    }
+
+    .appointment-card table.table thead th,
+    .appointment-card table.table tbody td {
+        padding: 10px 10px;
+        font-size: 0.82rem;
+    }
+}

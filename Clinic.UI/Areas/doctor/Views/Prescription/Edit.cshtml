@@ -1,0 +1,104 @@
+﻿@model PrescriptionDTO
+
+@{
+    ViewData["Title"] = Model.Id == Guid.Empty ? "Create Prescription" : "Edit Prescription";
+    var protocals = ViewBag.lstProtocals as List<ProtocalInfoDTO> ?? new List<ProtocalInfoDTO>();
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/doctor/css/prescription/edit.css" />
+}
+
+<div >
+    <form asp-controller="Prescription" asp-action="GetProtocal" method="post">
+        <input type="hidden" asp-for="AppointmentId" class="form-control" readonly />
+        <div class="form-group">
+            <select name="protocalId" class="form-select">
+                <option>All Protocals</option>
+                @foreach (var item in protocals)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+        <br />        
+        <div>
+            <button class="btn btn-primary" type="submit">
+                Implement
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="prescription-wrapper">
+    <div class="prescription-header">
+        <h3>@ViewData["Title"]</h3>
+        <span class="rx-symbol">℞</span>
+    </div>
+
+    <form asp-action="Save" method="post" id="prescriptionForm">
+        <input asp-for="Id" type="hidden" />
+        <input type="hidden" asp-for="AppointmentId" class="form-control" readonly />
+
+        <h4 class="section-title">Medicines</h4>
+
+        <table class="table prescription-table" id="medicineTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Duration</th>
+                    <th>Instructions</th>
+                    <th width="80"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Medicines.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" asp-for="Medicines[i].Id" />
+                            <input asp-for="Medicines[i].MedicineName" class="form-control" />
+                            <span asp-validation-for="Medicines[i].MedicineName" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="Medicines[i].Dosage" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Medicines[i].Frequency" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Medicines[i].Duration" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Medicines[i].Instructions" class="form-control" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger removeRow">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-outline-primary mb-3" id="addRow">+ Add Medicine</button>
+        <div class="text-danger" id="emptyTableError" style="display:none;">
+            You must add at least one medicine.
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        window.medicineRowIndex = @Model.Medicines.Count;
+    </script>
+    <script src="~/doctor/js/prescription/edit.js"></script>
+}

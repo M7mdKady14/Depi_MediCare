@@ -1,0 +1,343 @@
+﻿/* ==========================================================================
+   Doctor / Index.css
+   Medical Blue Theme
+   ========================================================================== */
+
+:root {
+    --med-blue-900: #0b3d63;
+    --med-blue-700: #0f5f96;
+    --med-blue-600: #1476b8;
+    --med-blue-500: #2f93d6;
+    --med-blue-100: #e7f3fb;
+    --med-blue-50: #f4f9fd;
+    --med-gray-700: #47586b;
+    --med-gray-400: #8fa1b3;
+    --med-border: #dce8f2;
+    --med-danger: #d64550;
+    --med-danger-soft: #fbe9ea;
+    --med-info: #0f5f96;
+    --med-info-soft: #e7f3fb;
+    --med-radius: 10px;
+    --med-shadow: 0 4px 16px rgba(15, 95, 150, 0.08);
+}
+
+.page-wrapper {
+    padding: 28px;
+    background: linear-gradient(180deg, var(--med-blue-50) 0%, #ffffff 220px);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid var(--med-border);
+    border-radius: var(--med-radius);
+    background: #ffffff;
+    box-shadow: var(--med-shadow);
+}
+
+/* ---------- Search card ---------- */
+.search-card {
+    padding: 18px 22px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+}
+
+    .search-form .form-control {
+        flex: 1 1 200px;
+        min-width: 160px;
+        border: 1px solid var(--med-border);
+        border-radius: 6px;
+        padding: 9px 14px;
+        font-size: 0.9rem;
+        color: var(--med-gray-700);
+        background-color: var(--med-blue-50);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+        .search-form .form-control:focus {
+            outline: none;
+            border-color: var(--med-blue-500);
+            box-shadow: 0 0 0 3px rgba(47, 147, 214, 0.15);
+            background-color: #ffffff;
+        }
+
+.search-actions {
+    display: flex;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.btn-search {
+    background-color: var(--med-blue-600);
+    border: 1px solid var(--med-blue-600);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border-radius: 6px;
+    padding: 9px 20px;
+    transition: all 0.15s ease;
+}
+
+    .btn-search:hover {
+        background-color: var(--med-blue-700);
+        border-color: var(--med-blue-700);
+    }
+
+.btn-reset {
+    background-color: transparent;
+    border: 1px solid var(--med-border);
+    color: var(--med-gray-700);
+    font-weight: 500;
+    font-size: 0.88rem;
+    border-radius: 6px;
+    padding: 9px 18px;
+    transition: all 0.15s ease;
+}
+
+    .btn-reset:hover {
+        background-color: var(--med-blue-50);
+        color: var(--med-blue-900);
+        border-color: var(--med-blue-500);
+    }
+
+/* ---------- Table card ---------- */
+.table-card {
+    overflow: hidden;
+}
+
+    .table-card .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, var(--med-blue-700) 0%, var(--med-blue-600) 100%);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.2px;
+        padding: 16px 22px;
+    }
+
+        .table-card .card-header::before {
+            content: "\2695";
+            margin-right: 8px;
+            opacity: 0.85;
+        }
+
+.btn-add {
+    background-color: #ffffff;
+    color: var(--med-blue-700);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .btn-add:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        color: var(--med-blue-900);
+    }
+
+.table-responsive {
+    padding: 4px 4px 8px;
+}
+
+/* ---------- Custom table ---------- */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .custom-table thead th {
+        background-color: var(--med-blue-100);
+        color: var(--med-blue-900);
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        letter-spacing: 0.6px;
+        font-weight: 700;
+        border-bottom: 2px solid var(--med-blue-500);
+        padding: 12px 18px;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .custom-table tbody td {
+        padding: 14px 18px;
+        color: var(--med-gray-700);
+        border-bottom: 1px solid var(--med-border);
+        vertical-align: middle;
+        font-size: 0.92rem;
+        text-align: center;
+    }
+
+    .custom-table tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+        .custom-table tbody tr:hover {
+            background-color: var(--med-blue-50);
+        }
+
+        .custom-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+    .custom-table .name {
+        font-weight: 600;
+        color: var(--med-blue-900);
+    }
+
+/* ---------- Action buttons ---------- */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+    .actions .btn {
+        font-size: 0.8rem;
+        font-weight: 500;
+        border-radius: 6px;
+        padding: 5px 12px;
+        border: 1px solid transparent;
+        transition: all 0.15s ease;
+    }
+
+.btn-info {
+    color: var(--med-info);
+    background: var(--med-info-soft);
+    border-color: var(--med-blue-500);
+}
+
+    .btn-info:hover {
+        background-color: var(--med-blue-500);
+        color: #ffffff;
+    }
+
+.btn-edit {
+    color: var(--med-blue-700);
+    background: transparent;
+    border-color: var(--med-blue-500);
+}
+
+    .btn-edit:hover {
+        background-color: var(--med-blue-600);
+        border-color: var(--med-blue-600);
+        color: #ffffff;
+    }
+
+.btn-delete {
+    color: var(--med-danger);
+    background: var(--med-danger-soft);
+    border-color: var(--med-danger);
+}
+
+    .btn-delete:hover {
+        background-color: var(--med-danger);
+        color: #ffffff;
+    }
+
+/* ---------- Pagination ---------- */
+.pg-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 22px;
+    border-top: 1px solid var(--med-border);
+    background-color: var(--med-blue-50);
+}
+
+.pg-info {
+    color: var(--med-gray-400);
+    font-size: 0.84rem;
+}
+
+.pg-btns {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 6px;
+    border: 1px solid var(--med-border);
+    background-color: #ffffff;
+    color: var(--med-blue-700);
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+    .pg-btn:hover {
+        background-color: var(--med-blue-100);
+        border-color: var(--med-blue-500);
+        color: var(--med-blue-900);
+        text-decoration: none;
+    }
+
+    .pg-btn.active {
+        background-color: var(--med-blue-600);
+        border-color: var(--med-blue-600);
+        color: #ffffff;
+    }
+
+    .pg-btn.disabled {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+.pg-ellipsis {
+    color: var(--med-gray-400);
+    padding: 0 4px;
+    font-size: 0.84rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .page-wrapper {
+        padding: 14px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-actions {
+        justify-content: stretch;
+    }
+
+        .search-actions .btn {
+            flex: 1;
+        }
+
+    .custom-table thead th,
+    .custom-table tbody td {
+        padding: 10px 10px;
+        font-size: 0.82rem;
+    }
+
+    .pg-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

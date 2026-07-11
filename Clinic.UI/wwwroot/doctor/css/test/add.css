@@ -1,0 +1,165 @@
+﻿/* =========================================================
+   Medical Radiology - Green Medical Theme
+   ========================================================= */
+
+:root {
+    --med-green-50: #f0faf6;
+    --med-green-100: #dcf3e8;
+    --med-green-200: #b8e6d1;
+    --med-green-300: #8ad4b3;
+    --med-green-400: #55bd91;
+    --med-green-500: #2fa377;
+    --med-green-600: #1e8a63;
+    --med-green-700: #17704f;
+    --med-green-800: #145b41;
+    --med-green-900: #0f4432;
+    --med-danger: #e05a5a;
+    --med-danger-dark: #c94747;
+    --med-text: #1f2d28;
+    --med-text-muted: #6b8079;
+    --med-border: #d9ece3;
+    --med-shadow: rgba(15, 68, 50, 0.08);
+}
+
+body {
+    background-color: var(--med-green-50);
+    color: var(--med-text);
+}
+
+/* ---------------- Card ---------------- */
+.admin-card {
+    background: #ffffff;
+    border: 1px solid var(--med-border);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px var(--med-shadow);
+    overflow: hidden;
+}
+
+.card-header-custom {
+    background: linear-gradient(135deg, var(--med-green-600), var(--med-green-500));
+    color: #ffffff;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 3px solid var(--med-green-700);
+}
+
+    .card-header-custom h3 {
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .card-header-custom i {
+        color: var(--med-green-100);
+    }
+
+.card-body-custom {
+    padding: 2rem 1.75rem;
+    background-color: #fdfffe;
+}
+
+/* ---------------- Form Elements ---------------- */
+.input-group-custom {
+    margin-bottom: 1.5rem;
+}
+
+.form-label-custom {
+    display: block;
+    font-weight: 600;
+    color: var(--med-green-800);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-control-custom {
+    width: 100%;
+    border: 1.5px solid var(--med-border);
+    border-radius: 10px;
+    padding: 0.65rem 0.9rem;
+    background-color: #ffffff;
+    color: var(--med-text);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .form-control-custom:focus {
+        outline: none;
+        border-color: var(--med-green-400);
+        box-shadow: 0 0 0 3px rgba(85, 189, 145, 0.25);
+    }
+
+textarea.form-control-custom {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* ---------------- File Upload Box ---------------- */
+#tbImgSrc {
+    background-color: var(--med-green-50);
+    border: 2px dashed var(--med-green-300) !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+    #tbImgSrc:hover {
+        border-color: var(--med-green-500) !important;
+        background-color: var(--med-green-100);
+    }
+
+#plusIcon {
+    color: var(--med-green-400);
+}
+
+/* ---------------- Buttons ---------------- */
+.btn-success {
+    background-color: var(--med-green-600);
+    border-color: var(--med-green-600);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 0.6rem 1.4rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .btn-success:hover {
+        background-color: var(--med-green-700);
+        border-color: var(--med-green-700);
+        transform: translateY(-1px);
+    }
+
+.btn-danger {
+    background-color: var(--med-danger);
+    border-color: var(--med-danger);
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+    .btn-danger:hover {
+        background-color: var(--med-danger-dark);
+        border-color: var(--med-danger-dark);
+    }
+
+.btn-back-list {
+    background-color: transparent;
+    border: 1.5px solid var(--med-green-400);
+    color: var(--med-green-700);
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+    .btn-back-list:hover {
+        background-color: var(--med-green-500);
+        color: #ffffff;
+    }
+
+/* ---------------- Validation ---------------- */
+.text-danger {
+    color: var(--med-danger) !important;
+    font-size: 0.85rem;
+}
+
+/* ---------------- Misc ---------------- */
+::selection {
+    background-color: var(--med-green-200);
+}
