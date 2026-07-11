@@ -11,13 +11,13 @@ namespace Clinic.Application.DTOs.AppointmentDTOs
 {
     public class AppointmentDTO : BaseDTO
     {
-        [Required]
+        [Required(ErrorMessage ="Please Enter Doctor")]
         public Guid DoctorId { get; set; }
 
         [Required]
         public Guid PatientId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Select Time")]
         public Guid DoctorScheduleId { get; set; }
 
         [Required]
